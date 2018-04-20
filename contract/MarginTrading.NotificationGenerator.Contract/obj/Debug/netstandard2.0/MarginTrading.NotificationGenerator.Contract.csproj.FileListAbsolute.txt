@@ -1,0 +1,9 @@
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.xml
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.deps.json
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.pdb
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.csproj.CoreCompileInputs.cache
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.AssemblyInfoInputs.cache
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.AssemblyInfo.cs
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.pdb

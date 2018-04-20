@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="1. Infrastructure" t="Include" />
+      <e p="2. Repositories" t="Include" />
+      <e p="3. Tests" t="Include" />
+      <e p="4. Contract" t="Include" />
+      <e p="contract/MarginTrading.NotificationGenerator.Contract" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.Contract.pdb" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="MarginTrading.NotificationGenerator.Contract.csproj" t="IncludeRecursive" />
+        <e p="MyPublishedMessage.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.Contract.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Readme.md" t="Include" />
+      </e>
+      <e p="MarginTrading.NotificationGenerator.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src/MarginTrading.NotificationGenerator" t="IncludeRecursive">
+        <e p="AzureQueueHandlers" t="Include">
+          <e p="MyAzureQueueHandler.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="IsAliveController.cs" t="Include" />
+        </e>
+        <e p="Dockerfile" t="Include" />
+        <e p="IncomingMessages" t="Include">
+          <e p="MySubscribedMessage.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="MarginTrading.NotificationGenerator.csproj" t="IncludeRecursive" />
+        <e p="Modules" t="Include">
+          <e p="JobModule.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="PeriodicalHandlers" t="Include">
+          <e p="MyPeriodicalHandler.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="RabbitPublishers" t="Include">
+          <e p="MyRabbitPublisher.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="RabbitSubscribers" t="Include">
+          <e p="MyRabbitSubscriber.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="Readme.md" t="Include" />
+        <e p="Settings" t="Include">
+          <e p="AppSettings.cs" t="Include" />
+          <e p="JobSettings" t="Include">
+            <e p="AzureQueueSettings.cs" t="Include" />
+            <e p="DbSettings.cs" t="Include" />
+            <e p="LykkeJobSettings.cs" t="Include" />
+            <e p="RabbitMqSettings.cs" t="Include" />
+          </e>
+          <e p="SlackNotifications" t="Include">
+            <e p="AzureQueuePublicationSettings.cs" t="Include" />
+            <e p="SlackNotificationsSettings.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="src/MarginTrading.NotificationGenerator.AzureRepositories" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MarginTrading.NotificationGenerator.AzureRepositories.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.AzureRepositories.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="src/MarginTrading.NotificationGenerator.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Domain" t="Include">
+          <e p="Health" t="Include">
+            <e p="HealthIssue.cs" t="Include" />
+            <e p="HealthIssuesCollection.cs" t="Include" />
+          </e>
+          <e p="Readme.md" t="Include" />
+        </e>
+        <e p="MarginTrading.NotificationGenerator.Core.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.Core.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Services" t="Include">
+          <e p="IHealthService.cs" t="Include" />
+          <e p="IMyRabbitPublisher.cs" t="Include" />
+          <e p="IShutdownManager.cs" t="Include" />
+          <e p="IStartupManager.cs" t="Include" />
+          <e p="Readme.md" t="Include" />
+        </e>
+      </e>
+      <e p="src/MarginTrading.NotificationGenerator.Services" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="HealthService.cs" t="Include" />
+        <e p="MarginTrading.NotificationGenerator.Services.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.Services.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Readme.md" t="Include" />
+        <e p="ShutdownManager.cs" t="Include" />
+        <e p="StartupManager.cs" t="Include" />
+      </e>
+      <e p="tests/MarginTrading.NotificationGenerator.Tests" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MarginTrading.NotificationGenerator.Tests.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MarginTrading.NotificationGenerator.Tests.AssemblyInfo.cs" t="Include" />
+              <e p="MarginTrading.NotificationGenerator.Tests.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="UnitTest1.cs" t="Include" />
+      </e>
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2018.1/resharper-host/local/Transient/ReSharperHost/v12/SolutionCaches/_MarginTrading.NotificationGenerator.-562924467.00" t="ExcludeRecursive" />
+  </component>
+</project>

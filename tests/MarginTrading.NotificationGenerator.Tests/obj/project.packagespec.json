@@ -1,0 +1,59 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/tests/MarginTrading.NotificationGenerator.Tests/MarginTrading.NotificationGenerator.Tests.csproj",
+    "projectName": "MarginTrading.NotificationGenerator.Tests",
+    "projectPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/tests/MarginTrading.NotificationGenerator.Tests/MarginTrading.NotificationGenerator.Tests.csproj",
+    "outputPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/tests/MarginTrading.NotificationGenerator.Tests/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.0"
+    ],
+    "frameworks": {
+      "netcoreapp2.0": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.0": {
+      "dependencies": {
+        "Microsoft.NET.Test.Sdk": {
+          "target": "Package",
+          "version": "[15.7.0, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.0.0, )",
+          "autoReferenced": true
+        },
+        "Moq": {
+          "target": "Package",
+          "version": "[4.8.2, )"
+        },
+        "xunit": {
+          "target": "Package",
+          "version": "[2.3.1, )"
+        },
+        "xunit.runner.visualstudio": {
+          "target": "Package",
+          "version": "[2.3.1, )"
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

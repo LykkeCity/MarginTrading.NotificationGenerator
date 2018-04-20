@@ -1,0 +1,51 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.Services/MarginTrading.NotificationGenerator.Services.csproj",
+    "projectName": "MarginTrading.NotificationGenerator.Services",
+    "projectPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.Services/MarginTrading.NotificationGenerator.Services.csproj",
+    "outputPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.Services/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.0"
+    ],
+    "frameworks": {
+      "netcoreapp2.0": {
+        "projectReferences": {
+          "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.Core/MarginTrading.NotificationGenerator.Core.csproj": {
+            "projectPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.Core/MarginTrading.NotificationGenerator.Core.csproj"
+          }
+        }
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.0": {
+      "dependencies": {
+        "Lykke.Common": {
+          "target": "Package",
+          "version": "[6.4.0, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.0.0, )",
+          "autoReferenced": true
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}
