@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Autofac;
 using Common;
 using Common.Log;
-using Lykke.Job.LykkeJob.IncomingMessages;
 using Lykke.RabbitMqBroker;
 using Lykke.RabbitMqBroker.Subscriber;
+using MarginTrading.NotificationGenerator.IncomingMessages;
 
-namespace Lykke.Job.LykkeJob.RabbitSubscribers
+namespace MarginTrading.NotificationGenerator.RabbitSubscribers
 {
     public class MyRabbitSubscriber : IStartable, IStopable
     {

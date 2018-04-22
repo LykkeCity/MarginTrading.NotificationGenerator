@@ -1,42 +1,35 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common.Log;
-using Lykke.Job.LykkeJob.Core.Services;
-using Lykke.Job.LykkeJob.Settings.JobSettings;
-using Lykke.Job.LykkeJob.Services;
+using Lykke.HttpClientGenerator;
+using Lykke.Service.ClientAccount.Client;
+using Lykke.Service.EmailSender;
 using Lykke.SettingsReader;
-#if azurequeuesub
-using Lykke.JobTriggers.Extenstions;
-#endif
-#if timeperiod
-using Lykke.Job.LykkeJob.PeriodicalHandlers;
-#endif
-#if rabbitsub
-using Lykke.Job.LykkeJob.RabbitSubscribers;
-#endif
-#if rabbitpub
-using Lykke.Job.LykkeJob.Contract;
-using Lykke.RabbitMq.Azure;
-using Lykke.RabbitMqBroker.Publisher;
-using Lykke.Job.LykkeJob.RabbitPublishers;
-using AzureStorage.Blob;
-#endif
+using MarginTrading.Backend.Contracts.DataReaderClient;
+using MarginTrading.NotificationGenerator.Core.Services;
+using MarginTrading.NotificationGenerator.Services;
+using MarginTrading.NotificationGenerator.Settings.JobSettings;
+using MarginTrading.NotificationGenerator.SqlRepositories;
+using MarginTrading.NotificationGenerator.SqlRepositories.Repositories;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Internal;
 
-namespace Lykke.Job.LykkeJob.Modules
+namespace MarginTrading.NotificationGenerator.Modules
 {
     public class JobModule : Module
     {
-        private readonly LykkeJobSettings _settings;
-        private readonly IReloadingManager<LykkeJobSettings> _settingsManager;
+        private readonly IHostingEnvironment _environment;
+        private readonly IReloadingManager<NotificationGeneratorSettings> _settingsManager;
         private readonly ILog _log;
         // NOTE: you can remove it if you don't need to use IServiceCollection extensions to register service specific dependencies
         private readonly IServiceCollection _services;
 
-        public JobModule(LykkeJobSettings settings, IReloadingManager<LykkeJobSettings> settingsManager, ILog log)
+        public JobModule(IReloadingManager<NotificationGeneratorSettings> settingsManager, ILog log, IHostingEnvironment environment)
         {
-            _settings = settings;
             _log = log;
+            _environment = environment;
             _settingsManager = settingsManager;
 
             _services = new ServiceCollection();
@@ -50,94 +43,64 @@ namespace Lykke.Job.LykkeJob.Modules
             //  .As<IQuotesPublisher>()
             //  .WithParameter(TypedParameter.From(_settings.Rabbit.ConnectionString))
 
-            builder.RegisterInstance(_log)
-                .As<ILog>()
-                .SingleInstance();
+            builder.RegisterInstance(_log).As<ILog>().SingleInstance();
 
-            builder.RegisterType<HealthService>()
-                .As<IHealthService>()
-                .SingleInstance();
+            builder.RegisterType<HealthService>().As<IHealthService>().SingleInstance();
 
-            builder.RegisterType<StartupManager>()
-                .As<IStartupManager>();
+            builder.RegisterType<StartupManager>().As<IStartupManager>();
 
-            builder.RegisterType<ShutdownManager>()
-                .As<IShutdownManager>();
-#if azurequeuesub
-
-            RegisterAzureQueueHandlers(builder);
-#endif
-#if timeperiod
-
-            RegisterPeriodicalHandlers(builder);
-#endif
-#if rabbitsub
-
-            RegisterRabbitMqSubscribers(builder);
-#endif
-#if rabbitpub
-
-            RegisterRabbitMqPublishers(builder);
-#endif
+            builder.RegisterType<ShutdownManager>().As<IShutdownManager>();
 
             // TODO: Add your dependencies here
+            
+            builder.RegisterInstance(_settingsManager).As<IReloadingManager<NotificationGeneratorSettings>>().SingleInstance();
+            
+            builder.RegisterType<SystemClock>().As<ISystemClock>().SingleInstance();
+            
+            builder.RegisterType<EmailService>().As<IEmailService>().SingleInstance();
+            
+            builder.Register<ITemplateGenerator>(ctx =>
+                new MustacheTemplateGenerator(_environment, "EmailTemplates")
+            ).SingleInstance();
+            
+            builder.RegisterType<TradingReportService>().As<ITradingReportService>().SingleInstance();
+            
+            builder.RegisterType<ConvertService>().As<IConvertService>().SingleInstance();
+
+            RegisterExternalServices(builder);
+
+            RegisterSqlRepositories(builder);
 
             builder.Populate(_services);
         }
-#if azurequeuesub
 
-        private void RegisterAzureQueueHandlers(ContainerBuilder builder)
+        private void RegisterSqlRepositories(ContainerBuilder builder)
         {
-            // NOTE: You can implement your own poison queue notifier for azure queue subscription.
-            // See https://github.com/LykkeCity/JobTriggers/blob/master/readme.md
-            // builder.Register<PoisionQueueNotifierImplementation>().As<IPoisionQueueNotifier>();
-
-            builder.AddTriggers(
-                pool =>
-                {
-                    pool.AddDefaultConnection(_settingsManager.Nested(s => s.AzureQueue.ConnectionString));
-                });
-        }
-#endif
-#if timeperiod
-
-        private void RegisterPeriodicalHandlers(ContainerBuilder builder)
-        {
-            // TODO: You should register each periodical handler in DI container as IStartable singleton and autoactivate it
-
-            builder.RegisterType<MyPeriodicalHandler>()
-                .As<IStartable>()
-                .AutoActivate()
+            builder.RegisterType<TradingPositionSqlRepository>()
+                .As<ITradingPositionSqlRepository>()
+                .WithParameter(new NamedParameter("connectionString", 
+                    _settingsManager.Nested(x => x.Db.SqlReportsConnString).CurrentValue))
                 .SingleInstance();
         }
-#endif
-#if rabbitsub
 
-        private void RegisterRabbitMqSubscribers(ContainerBuilder builder)
+        private void RegisterExternalServices(ContainerBuilder builder)
         {
-            // TODO: You should register each subscriber in DI container as IStartable singleton and autoactivate it
-
-            builder.RegisterType<MyRabbitSubscriber>()
-                .As<IStartable>()
-                .AutoActivate()
-                .SingleInstance()
-                .WithParameter("connectionString", _settings.Rabbit.ConnectionString)
-                .WithParameter("exchangeName", _settings.Rabbit.ExchangeName);
+            var dataReaderHttpGenerator = HttpClientGenerator
+                .BuildForUrl(_settingsManager.Nested(x => x.Services.DataReader.Url).CurrentValue)
+                .WithApiKey(_settingsManager.Nested(x => x.Services.DataReader.ApiKey).CurrentValue)
+                .Create();
+            builder.RegisterInstance(dataReaderHttpGenerator.Generate<Backend.Contracts.IAccountsApi>())
+                .As<Backend.Contracts.IAccountsApi>()
+                .SingleInstance();
+            builder.RegisterInstance(dataReaderHttpGenerator.Generate<Backend.Contracts.ITradeMonitoringReadingApi>())
+                .As<Backend.Contracts.ITradeMonitoringReadingApi>()
+                .SingleInstance();
+            
+            builder.RegisterLykkeServiceClient(_settingsManager.Nested(x => x.Services.ClientAccount.Url).CurrentValue);
+            
+            builder.Register<IEmailSender>(ctx =>
+                new EmailSenderClient(_settingsManager.Nested(x => x.Services.EmailSender.Url).CurrentValue, _log)
+            ).SingleInstance();
         }
-#endif
-#if rabbitpub
-
-        private void RegisterRabbitMqPublishers(ContainerBuilder builder)
-        {
-            // TODO: You should register each publisher in DI container as publisher specific interface and as IStartable,
-            // as singleton and do not autoactivate it
-
-            builder.RegisterType<MyRabbitPublisher>()
-                .As<IMyRabbitPublisher>()
-                .As<IStartable>()
-                .SingleInstance()
-                .WithParameter(TypedParameter.From(_settings.Rabbit.ConnectionString));
-        }
-#endif
     }
 }

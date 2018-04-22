@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
@@ -23,6 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Contract", "4. Contract", "{579F7EFC-B394-4D2B-9F42-C1A4293F5C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarginTrading.NotificationGenerator.Contract", "contract\MarginTrading.NotificationGenerator.Contract\MarginTrading.NotificationGenerator.Contract.csproj", "{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarginTrading.NotificationGenerator.SqlRepositories", "MarginTrading.NotificationGenerator.SqlRepositories\MarginTrading.NotificationGenerator.SqlRepositories.csproj", "{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8}"
 EndProject
 ##endif
 Global
@@ -57,6 +59,10 @@ Global
 		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Release|Any CPU.Build.0 = Release|Any CPU
 ##endif
+		{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 ##if (rabbitpub)
 		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9} = {579F7EFC-B394-4D2B-9F42-C1A4293F5C2B}
 ##endif
+		{8E6E5165-4A55-4D38-BAD1-F4A71E9B9CA8} = {AA5ECC48-14C3-4BE7-AF0C-D59FCA2742C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2419990-C093-4EE2-AFE9-80857ECBB147}

@@ -30,6 +30,10 @@
   "frameworks": {
     "netcoreapp2.0": {
       "dependencies": {
+        "AutoMapper": {
+          "target": "Package",
+          "version": "[6.2.2, )"
+        },
         "Lykke.Common": {
           "target": "Package",
           "version": "[6.4.0, )"

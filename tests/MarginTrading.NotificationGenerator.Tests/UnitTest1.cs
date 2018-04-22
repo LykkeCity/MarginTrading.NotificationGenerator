@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Lykke.Job.LykkeJob.Tests
+namespace MarginTrading.NotificationGenerator.Tests
 {
     public class UnitTest1
     {

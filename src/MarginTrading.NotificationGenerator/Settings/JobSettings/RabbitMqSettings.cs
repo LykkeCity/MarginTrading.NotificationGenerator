@@ -1,6 +1,6 @@
 ﻿using Lykke.SettingsReader.Attributes;
 
-namespace Lykke.Job.LykkeJob.Settings.JobSettings
+namespace MarginTrading.NotificationGenerator.Settings.JobSettings
 {
     public class RabbitMqSettings
     {

@@ -1,4 +1,4 @@
-﻿namespace Lykke.Job.LykkeJob.Settings.JobSettings
+﻿namespace MarginTrading.NotificationGenerator.Settings.JobSettings
 {
     public class AzureQueueSettings
     {

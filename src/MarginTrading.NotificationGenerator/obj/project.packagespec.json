@@ -15,6 +15,9 @@
     "frameworks": {
       "netcoreapp2.0": {
         "projectReferences": {
+          "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/MarginTrading.NotificationGenerator.SqlRepositories/MarginTrading.NotificationGenerator.SqlRepositories.csproj": {
+            "projectPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/MarginTrading.NotificationGenerator.SqlRepositories/MarginTrading.NotificationGenerator.SqlRepositories.csproj"
+          },
           "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.AzureRepositories/MarginTrading.NotificationGenerator.AzureRepositories.csproj": {
             "projectPath": "/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator.AzureRepositories/MarginTrading.NotificationGenerator.AzureRepositories.csproj"
           },
@@ -36,6 +39,10 @@
   "frameworks": {
     "netcoreapp2.0": {
       "dependencies": {
+        "FluentScheduler": {
+          "target": "Package",
+          "version": "[5.3.0, )"
+        },
         "Lykke.Common": {
           "target": "Package",
           "version": "[6.4.0, )"
@@ -51,6 +58,10 @@
         "Lykke.Logs": {
           "target": "Package",
           "version": "[3.6.2, )"
+        },
+        "Lykke.MarginTrading.Backend.Contracts": {
+          "target": "Package",
+          "version": "[3.0.0, )"
         },
         "Lykke.RabbitMq.Azure": {
           "target": "Package",

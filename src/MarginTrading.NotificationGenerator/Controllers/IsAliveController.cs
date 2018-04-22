@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Net;
+using Lykke.Common.Api.Contract.Responses;
+using MarginTrading.NotificationGenerator.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Lykke.Common.Api.Contract.Responses;
-using Lykke.Job.LykkeJob.Core.Services;
 
-namespace Lykke.Job.LykkeJob.Controllers
+namespace MarginTrading.NotificationGenerator.Controllers
 {
     // NOTE: See https://lykkex.atlassian.net/wiki/spaces/LKEWALLET/pages/35755585/Add+your+app+to+Monitoring
     [Route("api/[controller]")]

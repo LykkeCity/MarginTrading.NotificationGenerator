@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Job.LykkeJob.Contract;
-using Lykke.Job.LykkeJob.Core.Services;
 using Lykke.RabbitMqBroker.Publisher;
 using Lykke.RabbitMqBroker.Subscriber;
+using MarginTrading.NotificationGenerator.Contract;
+using MarginTrading.NotificationGenerator.Core.Services;
 
-namespace Lykke.Job.LykkeJob.RabbitPublishers
+namespace MarginTrading.NotificationGenerator.RabbitPublishers
 {
     public class MyRabbitPublisher : IMyRabbitPublisher
     {

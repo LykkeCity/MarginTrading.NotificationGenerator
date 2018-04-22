@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Common;
 using Common.Log;
 
-namespace Lykke.Job.LykkeJob.PeriodicalHandlers
+namespace MarginTrading.NotificationGenerator.PeriodicalHandlers
 {
     public class MyPeriodicalHandler : TimerPeriod
     {

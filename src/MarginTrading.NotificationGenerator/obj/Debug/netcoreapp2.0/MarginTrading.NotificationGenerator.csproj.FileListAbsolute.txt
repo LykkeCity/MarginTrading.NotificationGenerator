@@ -18,3 +18,5 @@
 /Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.csproj.CopyComplete
 /Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.dll
 /Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.pdb
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.SqlRepositories.dll
+/Users/isailen/_Projects/MarginTrading.NotificationGenerator/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.SqlRepositories.pdb

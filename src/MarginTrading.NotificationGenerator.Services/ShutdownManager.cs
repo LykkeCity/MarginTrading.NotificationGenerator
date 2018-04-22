@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using Common.Log;
-using Lykke.Job.LykkeJob.Core.Services;
+using MarginTrading.NotificationGenerator.Core.Services;
 
-namespace Lykke.Job.LykkeJob.Services
+namespace MarginTrading.NotificationGenerator.Services
 {
     // NOTE: Sometimes, shutdown process should be expressed explicitly. 
     // If this is your case, use this class to manage shutdown.

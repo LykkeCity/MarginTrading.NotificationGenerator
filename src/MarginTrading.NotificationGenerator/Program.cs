@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace Lykke.Job.LykkeJob
+namespace MarginTrading.NotificationGenerator
 {
     internal sealed class Program
     {
