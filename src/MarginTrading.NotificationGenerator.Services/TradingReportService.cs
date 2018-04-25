@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
 using Lykke.Service.ClientAccount.Client;
 using MarginTrading.Backend.Contracts.Account;
+using MarginTrading.Backend.Contracts.AccountHistory;
 using MarginTrading.Backend.Contracts.TradeMonitoring;
 using MarginTrading.NotificationGenerator.Core;
 using MarginTrading.NotificationGenerator.Core.Domain;
@@ -27,8 +29,8 @@ namespace MarginTrading.NotificationGenerator.Services
         private readonly IClientAccountClient _clientAccountClient;
         
         private readonly Backend.Contracts.IAccountsApi _accountsApi;
+        private readonly Backend.Contracts.IAccountHistoryApi _accountHistoryApi;
         private readonly Backend.Contracts.ITradeMonitoringReadingApi _tradeMonitoringReadingApi;
-        private readonly ITradingPositionSqlRepository _tradingPositionSqlRepository;
 
         public TradingReportService(
             IEmailService emailService,
@@ -39,8 +41,8 @@ namespace MarginTrading.NotificationGenerator.Services
             IClientAccountClient clientAccountClient,
             
             Backend.Contracts.IAccountsApi accountsApi,
-            Backend.Contracts.ITradeMonitoringReadingApi tradeMonitoringReadingApi,
-            ITradingPositionSqlRepository tradingPositionSqlRepository)
+            Backend.Contracts.IAccountHistoryApi accountHistoryApi,
+            Backend.Contracts.ITradeMonitoringReadingApi tradeMonitoringReadingApi)
         {
             _emailService = emailService;
             _convertService = convertService;
@@ -50,8 +52,8 @@ namespace MarginTrading.NotificationGenerator.Services
             _clientAccountClient = clientAccountClient;
             
             _accountsApi = accountsApi;
+            _accountHistoryApi = accountHistoryApi;
             _tradeMonitoringReadingApi = tradeMonitoringReadingApi;
-            _tradingPositionSqlRepository = tradingPositionSqlRepository;
         }
 
         public async Task PerformReporting()
@@ -61,28 +63,33 @@ namespace MarginTrading.NotificationGenerator.Services
             var reportMonth = _systemClock.UtcNow.Date.AddMonths(-1).Month;
 
             //gather data concurrently
-            var closedTradesTask = _tradingPositionSqlRepository.GetClosedFromPeriod(from, to);
-            var openPositionsTask = _tradeMonitoringReadingApi.OpenPositions();
+            var accountHistoryAggregateTask = _accountHistoryApi.ByTypes(new AccountHistoryRequest { From = from, To = to, });
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
             var accountsTask = _accountsApi.GetAllAccounts();
             
             //await & convert
-            var closedTrades = (await closedTradesTask).ToList();
-            var openPositions = (await openPositionsTask)
-                .Select(x => _convertService.Convert<OrderContract, Order>(x))
+            var accountHistoryAggregate = await accountHistoryAggregateTask;
+            var closedTrades = accountHistoryAggregate.PositionsHistory
+                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
+                .ToList();
+            var openPositions = accountHistoryAggregate.OpenPositions
+                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
                 .ToList();
             var pendingPositions = (await pendingPositionsTask)
-                .Select(x => _convertService.Convert<OrderContract, Order>(x))
+                .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
                 .ToList();
             var accounts = (await accountsTask)
                 .Select(x => _convertService.Convert<DataReaderAccountBackendContract, Account>(x))
+                .ToList();
+            var accountTransactions = accountHistoryAggregate.Account
+                .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
             var clients = accounts.Select(x => x.ClientId).Distinct().ToArray();
 
             //prepare notification models
             var notifications = clients.Select(x =>
-                PrepareNotification(reportMonth, x, closedTrades, openPositions, pendingPositions, accounts))
-                .ToList();
+                PrepareNotification(reportMonth, from, to, x, closedTrades, openPositions, pendingPositions,
+                    accounts, accountTransactions)).ToList();
 
             //retrieve emails
             var emails = (await _clientAccountClient.GetClientsByIdsAsync(clients))
@@ -122,22 +129,35 @@ namespace MarginTrading.NotificationGenerator.Services
             }
         }
 
-        private static MonthlyTradingNotification PrepareNotification(int reportMonth, string clientId, 
-            IEnumerable<TradingPosition> closedTrades, IEnumerable<Order> openPositions, 
-            IEnumerable<Order> pendingPositions, IEnumerable<Account> accounts)
+        private static MonthlyTradingNotification PrepareNotification(int reportMonth, 
+            DateTime from, DateTime to, string clientId, 
+            IEnumerable<OrderHistory> closedTrades, IEnumerable<OrderHistory> openPositions, 
+            IEnumerable<OrderHistory> pendingPositions, IEnumerable<Account> accounts,
+            IEnumerable<AccountHistory> accountTransactions)
         {
             return new MonthlyTradingNotification
             {
                 CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
+                From = from.ToString("dd.MM.yyyy"),
+                To = to.ToString("dd.MM.yyyy"),
                 ClientId = clientId,
-                
-                ClosedTrades = closedTrades.Where(x => x.TakerCounterpartyId == clientId)
+                //TODO push filter to settings + resolve legal entity via account
+                ClosedTrades = closedTrades.Where(x => x.ClientId == clientId)
                     .OrderByDescending(x => x.CloseDate).ToList(), 
                 OpenPositions = openPositions.Where(x => x.ClientId == clientId)
                     .OrderByDescending(x => x.OpenDate).ToList(), 
                 PendingPositions = pendingPositions.Where(x => x.ClientId == clientId)
                     .OrderByDescending(x => x.CreateDate).ToList(), 
                 Accounts = accounts.Where(x => x.ClientId == clientId)
+                    .Select(x =>
+                    {
+                        x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
+                                                                                && at.AccountId == x.Id
+                                                                                && x.LegalEntity == "LYKKECY")
+                            .OrderByDescending(at => at.Date).ToList();
+                        x.InitialBalance = x.AccountTransactions.LastOrDefault()?.Balance ?? x.Balance;
+                        return x;
+                    })
                     .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList(),
             };
         }

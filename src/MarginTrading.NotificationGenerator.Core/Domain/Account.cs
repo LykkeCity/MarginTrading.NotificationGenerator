@@ -1,4 +1,6 @@
-﻿namespace MarginTrading.NotificationGenerator.Core.Domain
+﻿using System.Collections.Generic;
+
+namespace MarginTrading.NotificationGenerator.Core.Domain
 {
     public class Account
     {
@@ -6,16 +8,14 @@
 
         public string ClientId { get; set; }
 
-        public string TradingConditionId { get; set; }
-
         public string BaseAssetId { get; set; }
 
         public decimal Balance { get; set; }
 
-        public decimal WithdrawTransferLimit { get; set; }
-
-        public bool IsLive { get; set; }
-
         public string LegalEntity { get; set; }
+
+        public List<AccountHistory> AccountTransactions { get; set; } = new List<AccountHistory>();
+
+        public decimal InitialBalance { get; set; }
     }
 }

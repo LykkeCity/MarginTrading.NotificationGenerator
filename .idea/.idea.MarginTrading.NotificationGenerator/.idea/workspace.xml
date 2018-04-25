@@ -2,115 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="020e2a80-8eda-4944-a2f6-8a074b11db27" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Entities/TradingPositionEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/ITradingPositionSqlRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Repositories/TradingPositionSqlRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Order.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/TradingPosition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/MtServiceLocator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IConvertService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IEmailService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/ITemplateGenerator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/ITradingReportService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ConvertService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/EmailService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/MustacheTemplateGenerator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/EmailTemplates/MonthlyTradingReport.mustache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Scheduling/MonthlyTradingReportJob.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/NotificationsSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServiceSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServicesSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/appsettings.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MarginTrading.NotificationGenerator/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MarginTrading.NotificationGenerator/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MarginTrading.NotificationGenerator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MarginTrading.NotificationGenerator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/MyPublishedMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/MyPublishedMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/bin/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/Debug/netstandard2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/MarginTrading.NotificationGenerator.Contract.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/MarginTrading.NotificationGenerator.Contract.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/MarginTrading.NotificationGenerator.AzureRepositories.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/MarginTrading.NotificationGenerator.AzureRepositories.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.AzureRepositories.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.AzureRepositories.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.AzureRepositories.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.AzureRepositories.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/MarginTrading.NotificationGenerator.AzureRepositories.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/MarginTrading.NotificationGenerator.AzureRepositories.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.AzureRepositories/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Health/HealthIssue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Health/HealthIssue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Health/HealthIssuesCollection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Health/HealthIssuesCollection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/MarginTrading.NotificationGenerator.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/MarginTrading.NotificationGenerator.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IHealthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IHealthService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IMyRabbitPublisher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IMyRabbitPublisher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IShutdownManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IShutdownManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IStartupManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IStartupManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/MarginTrading.NotificationGenerator.Core.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/MarginTrading.NotificationGenerator.Core.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/HealthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/HealthService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/MarginTrading.NotificationGenerator.Services.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/MarginTrading.NotificationGenerator.Services.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ShutdownManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ShutdownManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/StartupManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/StartupManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/MarginTrading.NotificationGenerator.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/MarginTrading.NotificationGenerator.Services.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/MarginTrading.NotificationGenerator.Services.csproj.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/MarginTrading.NotificationGenerator.Services.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/MarginTrading.NotificationGenerator.Services.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/AzureQueueHandlers/MyAzureQueueHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/AzureQueueHandlers/MyAzureQueueHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Controllers/IsAliveController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Controllers/IsAliveController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/IncomingMessages/MySubscribedMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/IncomingMessages/MySubscribedMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/MarginTrading.NotificationGenerator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/MarginTrading.NotificationGenerator.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/PeriodicalHandlers/MyPeriodicalHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/PeriodicalHandlers/MyPeriodicalHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/RabbitPublishers/MyRabbitPublisher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/RabbitPublishers/MyRabbitPublisher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/RabbitSubscribers/MyRabbitSubscriber.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/RabbitSubscribers/MyRabbitSubscriber.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/AppSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/AppSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/AzureQueueSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/AzureQueueSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/DbSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/DbSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/LykkeJobSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/NotificationGeneratorSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/RabbitMqSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/RabbitMqSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/SlackNotifications/AzureQueuePublicationSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/SlackNotifications/AzureQueuePublicationSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/SlackNotifications/SlackNotificationsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/SlackNotifications/SlackNotificationsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Contract.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Services.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/bin/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/MarginTrading.NotificationGenerator.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/MarginTrading.NotificationGenerator.csproj.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/MarginTrading.NotificationGenerator.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/MarginTrading.NotificationGenerator.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/UnitTest1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/UnitTest1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Tests.Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/Debug/netcoreapp2.0/MarginTrading.NotificationGenerator.Tests.Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/MarginTrading.NotificationGenerator.Tests.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/MarginTrading.NotificationGenerator.Tests.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MarginTrading.NotificationGenerator.Tests/obj/project.assets.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -121,24 +21,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TradingReportService.cs" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TradingReportService.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="90" column="12" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
+            <state relative-caret-position="352">
+              <caret line="138" column="13" lean-forward="true" selection-start-line="138" selection-start-column="13" selection-end-line="138" selection-end-column="13" />
               <folding>
-                <marker date="1524386652156" expanded="false" signature="6:611" ph="..." />
-                <marker date="1524386652156" expanded="true" signature="667:6546" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="731:6544" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="1745:2169" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="2215:3945" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="4103:5384" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="4264:4983" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="4298:4833" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="4870:4969" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="5027:5374" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="5660:6538" ph="{...}" />
-                <marker date="1524386652156" expanded="true" signature="5733:6527" ph="{...}" />
+                <marker date="1524729012517" expanded="false" signature="6:704" ph="..." />
+                <marker date="1524729012517" expanded="true" signature="760:7904" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="824:7902" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="1830:2232" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="2278:4423" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="4581:5862" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="4742:5461" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="4776:5311" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="5348:5447" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="5505:5852" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="6251:7896" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="6324:7885" ph="{...}" />
+                <marker date="1524729012517" expanded="true" signature="7205:7778" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -147,8 +48,8 @@
       <file leaf-file-name="appsettings.dev.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/appsettings.dev.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+            <state relative-caret-position="357">
+              <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -156,95 +57,35 @@
       <file leaf-file-name="MonthlyTradingNotification.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+            <state relative-caret-position="187">
+              <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
               <folding>
-                <marker date="1524317770380" expanded="true" signature="92:759" ph="{...}" />
-                <marker date="1524317770380" expanded="true" signature="138:757" ph="{...}" />
-                <marker date="1524317770380" expanded="true" signature="504:751" ph="{...}" />
+                <marker date="1524677638730" expanded="true" signature="138:848" ph="{...}" />
+                <marker date="1524677638730" expanded="true" signature="595:842" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Account.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs">
+      <file leaf-file-name="OrderHistory.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/OrderHistory.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="24" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="24" />
+              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
               <folding>
-                <marker date="1524316383892" expanded="true" signature="57:485" ph="{...}" />
-                <marker date="1524316383892" expanded="true" signature="84:483" ph="{...}" />
+                <marker date="1524675454118" expanded="false" signature="6:70" ph="..." />
+                <marker date="1524675454118" expanded="true" signature="129:952" ph="{...}" />
+                <marker date="1524675454118" expanded="true" signature="161:950" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Startup.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1870">
-              <caret line="134" column="116" selection-start-line="134" selection-start-column="68" selection-end-line="134" selection-end-column="116" />
-              <folding>
-                <marker date="1524384010810" expanded="false" signature="6:965" ph="..." />
-                <marker date="1524384010810" expanded="true" signature="1102:9414" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="1129:9412" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="1412:1656" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="1736:2984" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="1762:2804" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="1857:2060" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="2113:2243" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="2837:2974" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="3099:4393" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="3125:4221" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="3180:3269" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="3512:3652" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="3692:3851" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="4254:4383" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="4440:5845" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="4466:5652" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="5685:5835" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="5891:6422" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="5917:6157" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6190:6412" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6237:6375" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6460:7171" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6486:6861" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6661:6782" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6894:7161" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="6941:7124" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="7289:9406" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="7728:7928" ph="{...}" />
-                <marker date="1524384010810" expanded="true" signature="8650:8860" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JobModule.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
-              <folding>
-                <marker date="1524384978375" expanded="true" signature="6:712" ph="..." />
-                <marker date="1524384978375" expanded="true" signature="767:4706" ph="{...}" />
-                <marker date="1524384978375" expanded="true" signature="805:4704" ph="{...}" />
-                <marker date="1524384978375" expanded="true" signature="1320:1502" ph="{...}" />
-                <marker date="1524384978375" expanded="true" signature="1566:3149" ph="{...}" />
-                <marker date="1524384978375" expanded="true" signature="1589:1900" ph="/* NOTE: Do not register entire settings in container, pass necessary settings to services which requires them ... */" />
-                <marker date="1524384978375" expanded="true" signature="3221:3556" ph="{...}" />
-                <marker date="1524384978375" expanded="true" signature="3629:4698" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MonthlyTradingReport.mustache" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MonthlyTradingReport.mustache" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/EmailTemplates/MonthlyTradingReport.mustache">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+            <state relative-caret-position="144">
+              <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -273,18 +114,17 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/84/e9447c66/DataReaderAccountBackendContract.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Order.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/OrderHistory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/b5/a827c1ba/AccountHistoryContract.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/8a/9eb04219/OrderContract.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServicesSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServiceSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/AccountHistory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/AppSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/contract/MarginTrading.NotificationGenerator.Contract/MyPublishedMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Entities/TradingPositionEntity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Repositories/TradingPositionSqlRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/ITradingPositionSqlRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/TradingPosition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/93/3285ee75/AccountHistoryTypeContract.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IConvertService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ConvertService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Scheduling/MonthlyTradingReportJob.cs" root0="FORCE_HIGHLIGHTING" />
@@ -303,6 +143,7 @@
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/MustacheTemplateGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/AzureQueueSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/StartupManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/61/ed9b1d3c/OrderHistoryContract.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/NotificationGeneratorSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/DbSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs" root0="FORCE_HIGHLIGHTING" />
@@ -338,20 +179,22 @@
         <option value="$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/ITradingPositionRepository.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IConvertService.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/MonthlyTradingNotification.cs" />
-        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Order.cs" />
-        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/DbSettings.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServicesSettings.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/appsettings.dev.json" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Settings/JobSettings/ServiceSettings.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs" />
         <option value="$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Repositories/TradingPositionSqlRepository.cs" />
-        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ConvertService.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/TradingPosition.cs" />
-        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/AccountHistory.cs" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/OrderHistory.cs" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs" />
         <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/EmailTemplates/MonthlyTradingReport.mustache" />
+        <option value="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" />
       </list>
     </option>
   </component>
@@ -362,10 +205,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="52" />
+    <option name="x" value="51" />
     <option name="y" value="23" />
-    <option name="width" value="1622" />
-    <option name="height" value="1014" />
+    <option name="width" value="1629" />
+    <option name="height" value="995" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -375,12 +218,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-              <item name="MarginTrading.NotificationGenerator (7 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="MarginTrading.NotificationGenerator (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
           </expand>
           <select />
@@ -388,13 +232,13 @@
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="SearchEverywhereHistoryKey" value="tradingpo&#9;FILE&#9;file:///Users/isailen/_Projects/MarginTrading.NotificationGenerator/MarginTrading.NotificationGenerator.SqlRepositories/Entities/TradingPositionEntity.cs&#10;AzureQueueSettings&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editorconfig.notification" value="utf-8-bom" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -439,12 +283,16 @@
       <updated>1524217634943</updated>
       <workItem from="1524217638622" duration="10445000" />
       <workItem from="1524293580198" duration="14472000" />
-      <workItem from="1524386330114" duration="868000" />
+      <workItem from="1524386330114" duration="2507000" />
+      <workItem from="1524394531169" duration="7516000" />
+      <workItem from="1524652768230" duration="4528000" />
+      <workItem from="1524658504607" duration="12916000" />
+      <workItem from="1524728521579" duration="886000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25785000" />
+    <option name="totallyTimeSpent" value="53270000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -456,7 +304,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="23" width="1622" height="1014" extended-state="0" />
+    <frame x="51" y="23" width="1629" height="995" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -468,12 +316,11 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="NuGet" order="7" weight="0.32978722" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24969174" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24923266" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32978722" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -481,6 +328,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32978722" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
@@ -492,22 +340,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs</url>
-          <line>90</line>
-          <properties documentPath="$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs" initialLine="89">
-            <startOffsets>
-              <startOffset value="3888" />
-            </startOffsets>
-            <endOffsets>
-              <endOffset value="3935" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="DotNetProject">
@@ -537,98 +370,24 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <marker date="1524317770380" expanded="true" signature="92:759" ph="{...}" />
-            <marker date="1524317770380" expanded="true" signature="138:757" ph="{...}" />
-            <marker date="1524317770380" expanded="true" signature="504:751" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1870">
-          <caret line="134" column="116" selection-start-line="134" selection-start-column="68" selection-end-line="134" selection-end-column="116" />
-          <folding>
-            <marker date="1524384010810" expanded="false" signature="6:965" ph="..." />
-            <marker date="1524384010810" expanded="true" signature="1102:9414" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1129:9412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1412:1656" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1736:2984" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1762:2804" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1857:2060" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2113:2243" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2837:2974" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3099:4393" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3125:4221" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3180:3269" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3512:3652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3692:3851" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4254:4383" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4440:5845" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4466:5652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5685:5835" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5891:6422" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5917:6157" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6190:6412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6237:6375" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6460:7171" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6486:6861" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6661:6782" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6894:7161" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6941:7124" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7289:9406" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7728:7928" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="8650:8860" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
-          <folding>
-            <marker date="1524384978375" expanded="true" signature="6:712" ph="..." />
-            <marker date="1524384978375" expanded="true" signature="767:4706" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="805:4704" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1320:1502" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1566:3149" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1589:1900" ph="/* NOTE: Do not register entire settings in container, pass necessary settings to services which requires them ... */" />
-            <marker date="1524384978375" expanded="true" signature="3221:3556" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="3629:4698" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/EmailTemplates/MonthlyTradingReport.mustache">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="34" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="67" selection-start-line="25" selection-start-column="67" selection-end-line="25" selection-end-column="67" />
           <folding>
-            <marker date="1524386652156" expanded="false" signature="6:611" ph="..." />
-            <marker date="1524386652156" expanded="true" signature="667:6546" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="731:6544" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="1745:2169" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="2215:3945" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4103:5384" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4264:4983" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4298:4833" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4870:4969" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5027:5374" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5660:6538" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5733:6527" ph="{...}" />
+            <marker date="1524729012517" expanded="false" signature="6:704" ph="..." />
+            <marker date="1524729012517" expanded="true" signature="760:7904" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="824:7902" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="1830:2232" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="2278:4423" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4581:5862" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4742:5461" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4776:5311" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="5348:5447" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="5505:5852" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="6251:7896" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="6324:7885" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="7205:7778" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -637,38 +396,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1207">
           <caret line="71" column="119" selection-start-line="71" selection-start-column="119" selection-end-line="71" selection-end-column="119" />
-          <folding>
-            <marker date="1524384010810" expanded="false" signature="6:965" ph="..." />
-            <marker date="1524384010810" expanded="true" signature="1102:9414" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1129:9412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1412:1656" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1736:2984" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1762:2804" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1857:2060" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2113:2243" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2837:2974" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3099:4393" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3125:4221" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3180:3269" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3512:3652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3692:3851" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4254:4383" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4440:5845" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4466:5652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5685:5835" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5891:6422" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5917:6157" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6190:6412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6237:6375" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6460:7171" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6486:6861" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6661:6782" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6894:7161" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6941:7124" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7289:9406" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7728:7928" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="8650:8860" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -676,16 +403,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1292">
           <caret line="76" selection-start-line="76" selection-end-line="76" />
-          <folding>
-            <marker date="1524384978375" expanded="true" signature="6:712" ph="..." />
-            <marker date="1524384978375" expanded="true" signature="767:4706" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="805:4704" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1320:1502" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1566:3149" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1589:1900" ph="/* NOTE: Do not register entire settings in container, pass necessary settings to services which requires them ... */" />
-            <marker date="1524384978375" expanded="true" signature="3221:3556" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="3629:4698" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,13 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/ITradingPositionSqlRepository.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="91" selection-start-line="9" selection-start-column="91" selection-end-line="9" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Services/IConvertService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -859,24 +569,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/84/e9447c66/DataReaderAccountBackendContract.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="26" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/8a/9eb04219/OrderContract.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="762">
           <caret line="94" column="70" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="94" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Order.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1394">
-          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -908,76 +604,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1870">
-          <caret line="134" column="116" selection-start-line="134" selection-start-column="68" selection-end-line="134" selection-end-column="116" />
-          <folding>
-            <marker date="1524384010810" expanded="false" signature="6:965" ph="..." />
-            <marker date="1524384010810" expanded="true" signature="1102:9414" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1129:9412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1412:1656" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1736:2984" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1762:2804" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="1857:2060" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2113:2243" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="2837:2974" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3099:4393" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3125:4221" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3180:3269" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3512:3652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="3692:3851" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4254:4383" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4440:5845" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="4466:5652" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5685:5835" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5891:6422" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="5917:6157" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6190:6412" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6237:6375" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6460:7171" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6486:6861" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6661:6782" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6894:7161" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="6941:7124" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7289:9406" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="7728:7928" ph="{...}" />
-            <marker date="1524384010810" expanded="true" signature="8650:8860" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/appsettings.dev.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
-          <folding>
-            <marker date="1524384978375" expanded="true" signature="6:712" ph="..." />
-            <marker date="1524384978375" expanded="true" signature="767:4706" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="805:4704" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1320:1502" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1566:3149" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="1589:1900" ph="/* NOTE: Do not register entire settings in container, pass necessary settings to services which requires them ... */" />
-            <marker date="1524384978375" expanded="true" signature="3221:3556" ph="{...}" />
-            <marker date="1524384978375" expanded="true" signature="3629:4698" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Repositories/TradingPositionSqlRepository.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="42" column="102" selection-start-line="42" selection-start-column="64" selection-end-line="42" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Repositories/TradingPositionSqlRepository.cs" />
     <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/ConvertService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -985,68 +612,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Entities/TradingPositionEntity.cs">
+    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/Entities/TradingPositionEntity.cs" />
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Startup.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="37" column="56" selection-start-line="6" selection-start-column="8" selection-end-line="37" selection-end-column="56" />
+        <state relative-caret-position="1530">
+          <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/TradingPosition.cs">
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/appsettings.dev.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="56" selection-start-line="37" selection-start-column="56" selection-end-line="37" selection-end-column="56" />
+        <state relative-caret-position="357">
+          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs">
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/TradingPosition.cs" />
+    <entry file="file://$PROJECT_DIR$/MarginTrading.NotificationGenerator.SqlRepositories/ITradingPositionSqlRepository.cs" />
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/Modules/JobModule.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="90" column="12" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
-          <folding>
-            <marker date="1524386652156" expanded="false" signature="6:611" ph="..." />
-            <marker date="1524386652156" expanded="true" signature="667:6546" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="731:6544" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="1745:2169" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="2215:3945" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4103:5384" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4264:4983" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4298:4833" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="4870:4969" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5027:5374" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5660:6538" ph="{...}" />
-            <marker date="1524386652156" expanded="true" signature="5733:6527" ph="{...}" />
-          </folding>
+        <state relative-caret-position="590">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/93/3285ee75/AccountHistoryTypeContract.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-          <folding>
-            <marker date="1524317770380" expanded="true" signature="92:759" ph="{...}" />
-            <marker date="1524317770380" expanded="true" signature="138:757" ph="{...}" />
-            <marker date="1524317770380" expanded="true" signature="504:751" ph="{...}" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/b5/a827c1ba/AccountHistoryContract.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/AccountHistory.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/Account.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="24" />
+          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/OrderHistory.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
           <folding>
-            <marker date="1524316383892" expanded="true" signature="57:485" ph="{...}" />
-            <marker date="1524316383892" expanded="true" signature="84:483" ph="{...}" />
+            <marker date="1524675454118" expanded="false" signature="6:70" ph="..." />
+            <marker date="1524675454118" expanded="true" signature="129:952" ph="{...}" />
+            <marker date="1524675454118" expanded="true" signature="161:950" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Core/Domain/MonthlyTradingNotification.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+          <folding>
+            <marker date="1524677638730" expanded="true" signature="138:848" ph="{...}" />
+            <marker date="1524677638730" expanded="true" signature="595:842" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator/EmailTemplates/MonthlyTradingReport.mustache">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        <state relative-caret-position="144">
+          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/84/e9447c66/DataReaderAccountBackendContract.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D3D2342-7950-4277-B592-796DBE573077/61/ed9b1d3c/OrderHistoryContract.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="743">
+          <caret line="71" column="56" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MarginTrading.NotificationGenerator.Services/TradingReportService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="138" column="13" lean-forward="true" selection-start-line="138" selection-start-column="13" selection-end-line="138" selection-end-column="13" />
+          <folding>
+            <marker date="1524729012517" expanded="false" signature="6:704" ph="..." />
+            <marker date="1524729012517" expanded="true" signature="760:7904" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="824:7902" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="1830:2232" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="2278:4423" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4581:5862" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4742:5461" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="4776:5311" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="5348:5447" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="5505:5852" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="6251:7896" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="6324:7885" ph="{...}" />
+            <marker date="1524729012517" expanded="true" signature="7205:7778" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

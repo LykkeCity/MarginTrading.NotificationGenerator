@@ -5,11 +5,13 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
     public class MonthlyTradingNotification
     {
         public string CurrentMonth { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
         public string ClientId { get; set; }
 
-        public List<TradingPosition> ClosedTrades { get; set; }
-        public List<Order> OpenPositions { get; set; }
-        public List<Order> PendingPositions { get; set; }
+        public List<OrderHistory> ClosedTrades { get; set; }
+        public List<OrderHistory> OpenPositions { get; set; }
+        public List<OrderHistory> PendingPositions { get; set; }
         public List<Account> Accounts { get; set; }
 
         public string GetLogData()

@@ -29,24 +29,6 @@
         <e p="Readme.md" t="Include" />
       </e>
       <e p="MarginTrading.NotificationGenerator.sln" t="IncludeFlat" />
-      <e p="MarginTrading.NotificationGenerator.SqlRepositories" t="IncludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="Entities" t="Include">
-          <e p="TradingPositionEntity.cs" t="Include" />
-        </e>
-        <e p="ITradingPositionSqlRepository.cs" t="Include" />
-        <e p="MarginTrading.NotificationGenerator.SqlRepositories.csproj" t="IncludeRecursive" />
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp2.0" t="Include">
-              <e p="MarginTrading.NotificationGenerator.SqlRepositories.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-        <e p="Repositories" t="Include">
-          <e p="TradingPositionSqlRepository.cs" t="Include" />
-        </e>
-      </e>
       <e p="packages" t="ExcludeRecursive" />
       <e p="src/MarginTrading.NotificationGenerator" t="IncludeRecursive">
         <e p="appsettings.dev.json" t="Include" />
@@ -132,14 +114,14 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Domain" t="Include">
           <e p="Account.cs" t="Include" />
+          <e p="AccountHistory.cs" t="Include" />
           <e p="Health" t="Include">
             <e p="HealthIssue.cs" t="Include" />
             <e p="HealthIssuesCollection.cs" t="Include" />
           </e>
           <e p="MonthlyTradingNotification.cs" t="Include" />
-          <e p="Order.cs" t="Include" />
+          <e p="OrderHistory.cs" t="Include" />
           <e p="Readme.md" t="Include" />
-          <e p="TradingPosition.cs" t="Include" />
         </e>
         <e p="MarginTrading.NotificationGenerator.Core.csproj" t="IncludeRecursive" />
         <e p="MtServiceLocator.cs" t="Include" />
