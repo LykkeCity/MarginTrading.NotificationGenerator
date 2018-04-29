@@ -11,7 +11,6 @@
     <PackageReference Include="Nustache" Version="1.16.0.8" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MarginTrading.NotificationGenerator.SqlRepositories\MarginTrading.NotificationGenerator.SqlRepositories.csproj" />
     <ProjectReference Include="..\MarginTrading.NotificationGenerator.Core\MarginTrading.NotificationGenerator.Core.csproj" />
   </ItemGroup>
 </Project>

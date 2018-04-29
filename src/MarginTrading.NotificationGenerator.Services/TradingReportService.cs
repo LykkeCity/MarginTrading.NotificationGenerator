@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AutoMapper;
 using Common.Log;
 using Lykke.Service.ClientAccount.Client;
 using MarginTrading.Backend.Contracts.Account;
 using MarginTrading.Backend.Contracts.AccountHistory;
 using MarginTrading.Backend.Contracts.TradeMonitoring;
-using MarginTrading.NotificationGenerator.Core;
 using MarginTrading.NotificationGenerator.Core.Domain;
 using MarginTrading.NotificationGenerator.Core.Services;
-using MarginTrading.NotificationGenerator.SqlRepositories;
-using Microsoft.ApplicationInsights.DataContracts;
+using MarginTrading.NotificationGenerator.Core.Settings;
 using Microsoft.Extensions.Internal;
 
 namespace MarginTrading.NotificationGenerator.Services
@@ -25,6 +22,7 @@ namespace MarginTrading.NotificationGenerator.Services
         private readonly IConvertService _convertService;
         private readonly ISystemClock _systemClock;
         private readonly ILog _log;
+        private readonly TradingReportFilter _tradingReportFilter;
 
         private readonly IClientAccountClient _clientAccountClient;
         
@@ -36,7 +34,8 @@ namespace MarginTrading.NotificationGenerator.Services
             IEmailService emailService,
             IConvertService convertService,
             ISystemClock systemClock, 
-            ILog log, 
+            ILog log,
+            TradingReportFilter tradingReportFilter,
             
             IClientAccountClient clientAccountClient,
             
@@ -48,6 +47,7 @@ namespace MarginTrading.NotificationGenerator.Services
             _convertService = convertService;
             _systemClock = systemClock;
             _log = log;
+            _tradingReportFilter = tradingReportFilter;
 
             _clientAccountClient = clientAccountClient;
             
@@ -67,7 +67,7 @@ namespace MarginTrading.NotificationGenerator.Services
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
             var accountsTask = _accountsApi.GetAllAccounts();
             
-            //await & convert
+            //await & filter & convert
             var accountHistoryAggregate = await accountHistoryAggregateTask;
             var closedTrades = accountHistoryAggregate.PositionsHistory
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
@@ -78,10 +78,12 @@ namespace MarginTrading.NotificationGenerator.Services
             var pendingPositions = (await pendingPositionsTask)
                 .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
                 .ToList();
-            var accounts = (await accountsTask)
+            var accounts = (await accountsTask).Where(x =>
+                    Regex.IsMatch(x.LegalEntity, _tradingReportFilter.LegalEntityRegex, RegexOptions.IgnoreCase))
                 .Select(x => _convertService.Convert<DataReaderAccountBackendContract, Account>(x))
                 .ToList();
-            var accountTransactions = accountHistoryAggregate.Account
+            var accountTransactions = accountHistoryAggregate.Account.Where(x =>
+                    Regex.IsMatch(x.LegalEntity, _tradingReportFilter.LegalEntityRegex, RegexOptions.IgnoreCase))
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
             var clients = accounts.Select(x => x.ClientId).Distinct().ToArray();
@@ -135,30 +137,33 @@ namespace MarginTrading.NotificationGenerator.Services
             IEnumerable<OrderHistory> pendingPositions, IEnumerable<Account> accounts,
             IEnumerable<AccountHistory> accountTransactions)
         {
+            var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
+                .Select(x =>
+                {
+                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
+                                                                            && at.AccountId == x.Id)
+                        .OrderByDescending(at => at.Date).ToList();
+                    x.InitialBalance = x.AccountTransactions.LastOrDefault()?.Balance ?? x.Balance;
+                    return x;
+                })
+                .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
+            var accountIds = filteredAccounts.Select(x => x.Id).ToHashSet();
             return new MonthlyTradingNotification
             {
                 CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
                 From = from.ToString("dd.MM.yyyy"),
                 To = to.ToString("dd.MM.yyyy"),
                 ClientId = clientId,
-                //TODO push filter to settings + resolve legal entity via account
-                ClosedTrades = closedTrades.Where(x => x.ClientId == clientId)
-                    .OrderByDescending(x => x.CloseDate).ToList(), 
-                OpenPositions = openPositions.Where(x => x.ClientId == clientId)
-                    .OrderByDescending(x => x.OpenDate).ToList(), 
-                PendingPositions = pendingPositions.Where(x => x.ClientId == clientId)
-                    .OrderByDescending(x => x.CreateDate).ToList(), 
-                Accounts = accounts.Where(x => x.ClientId == clientId)
-                    .Select(x =>
-                    {
-                        x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
-                                                                                && at.AccountId == x.Id
-                                                                                && x.LegalEntity == "LYKKECY")
-                            .OrderByDescending(at => at.Date).ToList();
-                        x.InitialBalance = x.AccountTransactions.LastOrDefault()?.Balance ?? x.Balance;
-                        return x;
-                    })
-                    .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList(),
+                ClosedTrades = closedTrades
+                    .Where(x => x.ClientId == clientId && accountIds.Any(a => a == x.AccountId))
+                    .OrderByDescending(x => x.CloseDate).ToList(),
+                OpenPositions = openPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Any(a => a == x.AccountId))
+                    .OrderByDescending(x => x.OpenDate).ToList(),
+                PendingPositions = pendingPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Any(a => a == x.AccountId))
+                    .OrderByDescending(x => x.CreateDate).ToList(),
+                Accounts = filteredAccounts,
             };
         }
     }

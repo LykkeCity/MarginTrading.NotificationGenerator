@@ -1,9 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using JetBrains.Annotations;
-using MarginTrading.NotificationGenerator.Core.Domain;
 using MarginTrading.NotificationGenerator.Core.Services;
-using MarginTrading.NotificationGenerator.SqlRepositories.Entities;
 
 namespace MarginTrading.NotificationGenerator.Services
 {

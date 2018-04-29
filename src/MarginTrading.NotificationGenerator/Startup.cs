@@ -11,7 +11,6 @@ using Lykke.Common.ApiLibrary.Swagger;
 using Lykke.Logs;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
-using MarginTrading.Backend.Contracts.DataReaderClient;
 using MarginTrading.NotificationGenerator.Core;
 using MarginTrading.NotificationGenerator.Core.Services;
 using MarginTrading.NotificationGenerator.Modules;
@@ -22,7 +21,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Internal;
 
 #if azurequeuesub
 using Lykke.JobTriggers.Triggers;
@@ -69,7 +67,9 @@ namespace MarginTrading.NotificationGenerator
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.Nested(x => x.MtNotificationGeneratorSettings), 
+                builder.RegisterModule(new JobModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
+                    Log, Environment));
+                builder.RegisterModule(new ExternalServicesModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
                     Log, Environment));
                 
                 builder.Populate(services);
@@ -132,8 +132,8 @@ namespace MarginTrading.NotificationGenerator
 
                 //initialize schedules
                 var registry = new Registry();
-                var settingsCalcTime = ApplicationContainer.Resolve<IReloadingManager<NotificationGeneratorSettings>>()
-                    .CurrentValue.MonthlyTradingReportSettings.InvocationTime;
+                var settingsCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
+                    .MonthlyTradingReportSettings.InvocationTime;
                 registry.Schedule<MonthlyTradingReportJob>().ToRunEvery(0).Months().On(1)
                     .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
                 JobManager.Initialize(registry);

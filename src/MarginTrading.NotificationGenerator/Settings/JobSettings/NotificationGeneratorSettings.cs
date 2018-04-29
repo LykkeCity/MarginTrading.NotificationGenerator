@@ -1,6 +1,4 @@
-﻿using MarginTrading.NotificationGenerator.Settings.SlackNotifications;
-
-namespace MarginTrading.NotificationGenerator.Settings.JobSettings
+﻿namespace MarginTrading.NotificationGenerator.Settings.JobSettings
 {
     public class NotificationGeneratorSettings
     {

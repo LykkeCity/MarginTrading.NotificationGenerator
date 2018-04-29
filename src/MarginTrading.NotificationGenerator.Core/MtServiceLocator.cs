@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-using MarginTrading.NotificationGenerator.Core.Services;
-using Microsoft.Extensions.Internal;
+﻿using MarginTrading.NotificationGenerator.Core.Services;
 
 namespace MarginTrading.NotificationGenerator.Core
 {

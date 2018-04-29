@@ -46,7 +46,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MarginTrading.NotificationGenerator.SqlRepositories\MarginTrading.NotificationGenerator.SqlRepositories.csproj" />
     <ProjectReference Include="..\MarginTrading.NotificationGenerator.AzureRepositories\MarginTrading.NotificationGenerator.AzureRepositories.csproj" />
     <ProjectReference Include="..\MarginTrading.NotificationGenerator.Core\MarginTrading.NotificationGenerator.Core.csproj" />
     <ProjectReference Include="..\MarginTrading.NotificationGenerator.Services\MarginTrading.NotificationGenerator.Services.csproj" />
