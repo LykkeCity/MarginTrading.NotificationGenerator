@@ -1,14 +1,28 @@
-﻿using Autofac;
+﻿using System.Threading.Tasks;
+using Autofac;
+using Common.Log;
 using Lykke.Service.ClientAccount.Client;
 using Lykke.Service.EmailSender;
 using MarginTrading.Backend.Contracts;
 using MarginTrading.NotificationGenerator.Tests.Mocks;
+using Moq;
 
 namespace MarginTrading.NotificationGenerator.Tests.Modules
 {
     public class ExternalServiceMockModule : Module
     {
+        private readonly ILog _log;
+
+        internal readonly Mock<IEmailSender> EmailSenderMock;
         
+        public ExternalServiceMockModule(ILog log)
+        {
+            _log = log;
+            
+            EmailSenderMock = new Mock<IEmailSender>();
+            EmailSenderMock.Setup(x => x.SendAsync(It.IsAny<EmailMessage>(), It.IsAny<EmailAddressee>()))
+                .Returns(Task.CompletedTask);
+        }
         
         protected override void Load(ContainerBuilder builder)
         {
@@ -20,7 +34,7 @@ namespace MarginTrading.NotificationGenerator.Tests.Modules
 
             builder.RegisterInstance(new ClientAccountClientMock()).As<IClientAccountClient>().SingleInstance();
 
-            builder.RegisterInstance(new EmailSenderMock()).As<IEmailSender>().SingleInstance();
+            builder.RegisterInstance(EmailSenderMock.Object).As<IEmailSender>().SingleInstance();
         }
     }
 }

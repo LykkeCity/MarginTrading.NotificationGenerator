@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Lykke.Service.EmailSender;
+using MarginTrading.NotificationGenerator.Core.Services;
 
 namespace MarginTrading.NotificationGenerator.Tests.Mocks
 {

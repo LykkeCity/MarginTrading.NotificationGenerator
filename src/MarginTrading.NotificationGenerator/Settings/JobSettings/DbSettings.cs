@@ -7,7 +7,7 @@ namespace MarginTrading.NotificationGenerator.Settings.JobSettings
         [AzureTableCheck]
         public string LogsConnString { get; set; }
         
-        [SqlCheck]
+        //[SqlCheck]
         public string SqlReportsConnString { get; set; }
     }
 }

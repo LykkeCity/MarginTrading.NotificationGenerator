@@ -13,13 +13,13 @@ namespace MarginTrading.NotificationGenerator.Tests.Mocks
         {
             yield return new ClientAccountInformationModel
             {
-                Id = "a1",
-                Email = "fakemail1@fake.com"
+                Id = "c1",
+                Email = "fake1@lykke.com"
             };
             yield return new ClientAccountInformationModel
             {
-                Id = "a2",
-                Email = "fakemail2@fake.com"
+                Id = "c2",
+                Email = "fake2@lykke.com"
             };
         }
         

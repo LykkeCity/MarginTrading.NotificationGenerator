@@ -27,6 +27,8 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public DateTime? OpenDate { get; set; }
 
         public DateTime? CloseDate { get; set; }
+        
+        public string CloseReason { get; set; }
 
         public decimal Volume { get; set; }
 

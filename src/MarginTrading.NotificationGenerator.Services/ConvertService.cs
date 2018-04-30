@@ -1,6 +1,10 @@
 ﻿using System;
 using AutoMapper;
 using JetBrains.Annotations;
+using MarginTrading.Backend.Contracts.Account;
+using MarginTrading.Backend.Contracts.AccountHistory;
+using MarginTrading.Backend.Contracts.TradeMonitoring;
+using MarginTrading.NotificationGenerator.Core.Domain;
 using MarginTrading.NotificationGenerator.Core.Services;
 
 namespace MarginTrading.NotificationGenerator.Services
@@ -15,7 +19,11 @@ namespace MarginTrading.NotificationGenerator.Services
             return new MapperConfiguration(cfg =>
             {
                 // todo: add some global configurations here
-                
+                cfg.CreateMap<OrderHistoryContract, OrderHistory>().ReverseMap();
+                cfg.CreateMap<OrderContract, OrderHistory>().ReverseMap();
+                cfg.CreateMap<DataReaderAccountBackendContract, Account>().ReverseMap();
+                cfg.CreateMap<AccountHistoryContract, AccountHistory>().ReverseMap();
+
             }).CreateMapper();
         }
 
