@@ -33,6 +33,8 @@ namespace MarginTrading.NotificationGenerator.Tests.Modules
             builder.RegisterInstance(new AccountHistoryApiMock()).As<IAccountHistoryApi>().SingleInstance();
 
             builder.RegisterInstance(new ClientAccountClientMock()).As<IClientAccountClient>().SingleInstance();
+            
+            builder.RegisterInstance(new AssetPairsReadingMock()).As<IAssetPairsReadingApi>().SingleInstance();
 
             builder.RegisterInstance(EmailSenderMock.Object).As<IEmailSender>().SingleInstance();
         }
