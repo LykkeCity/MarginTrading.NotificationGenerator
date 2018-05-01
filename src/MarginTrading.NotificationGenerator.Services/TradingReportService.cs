@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using MoreLinq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper.Mappers;
@@ -112,6 +113,7 @@ namespace MarginTrading.NotificationGenerator.Services
             
             var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
+                .DistinctBy(x => x.Id)
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .ToList();
@@ -188,7 +190,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     return x;
                 })
                 .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
-            var accountIds = filteredAccounts.Select(x => x.Id).ToHashSet();
+            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
             return new MonthlyTradingNotification
             {
                 CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
