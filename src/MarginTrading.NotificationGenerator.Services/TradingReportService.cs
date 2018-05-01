@@ -31,6 +31,7 @@ namespace MarginTrading.NotificationGenerator.Services
         private readonly Backend.Contracts.IAccountsApi _accountsApi;
         private readonly Backend.Contracts.IAccountHistoryApi _accountHistoryApi;
         private readonly Backend.Contracts.ITradeMonitoringReadingApi _tradeMonitoringReadingApi;
+        private readonly Backend.Contracts.IAssetPairsReadingApi _assetPairsReadingApi;
 
         public TradingReportService(
             IEmailService emailService,
@@ -43,7 +44,8 @@ namespace MarginTrading.NotificationGenerator.Services
             
             Backend.Contracts.IAccountsApi accountsApi,
             Backend.Contracts.IAccountHistoryApi accountHistoryApi,
-            Backend.Contracts.ITradeMonitoringReadingApi tradeMonitoringReadingApi)
+            Backend.Contracts.ITradeMonitoringReadingApi tradeMonitoringReadingApi,
+            Backend.Contracts.IAssetPairsReadingApi assetPairsReadingApi)
         {
             _emailService = emailService;
             _convertService = convertService;
@@ -56,6 +58,7 @@ namespace MarginTrading.NotificationGenerator.Services
             _accountsApi = accountsApi;
             _accountHistoryApi = accountHistoryApi;
             _tradeMonitoringReadingApi = tradeMonitoringReadingApi;
+            _assetPairsReadingApi = assetPairsReadingApi;
         }
 
         private bool LegalEntityPredicate(string legalEntity)
@@ -77,6 +80,7 @@ namespace MarginTrading.NotificationGenerator.Services
             //gather data concurrently, await & filter & convert
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
             var accountsTask = _accountsApi.GetAllAccounts();
+            var assetPairsTask = _assetPairsReadingApi.List();
 
             var accounts = (await accountsTask).Where(x => LegalEntityPredicate(x.LegalEntity))
                 .Select(x => _convertService.Convert<DataReaderAccountBackendContract, Account>(x))
@@ -84,6 +88,7 @@ namespace MarginTrading.NotificationGenerator.Services
             var clientIds = accounts.Select(x => x.ClientId).Distinct().ToArray();
             var accountIds = accounts.Select(x => x.Id).Distinct().ToHashSet();
             var accountClients = accounts.ToDictionary(x => x.Id, x => x.ClientId);
+            var assetPairNames = (await assetPairsTask).ToDictionary(x => x.Id, x => x.Name);
            
             var accountHistoryAggregate = new AccountHistoryResponse
             {
@@ -109,13 +114,16 @@ namespace MarginTrading.NotificationGenerator.Services
             var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountIds.Contains(x.AccountId))
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
                 .SetClientId(accountClients)
+                .SetInstrumentName(assetPairNames)
                 .ToList();
             var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountIds.Contains(x.AccountId))
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
                 .SetClientId(accountClients)
+                .SetInstrumentName(assetPairNames)
                 .ToList();
             var pendingPositions = (await pendingPositionsTask).Where(x => accountIds.Contains(x.AccountId))
                 .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
+                .SetInstrumentName(assetPairNames)
                 .ToList();
             var accountTransactions = accountHistoryAggregate.Account.Where(x => accountIds.Contains(x.AccountId))
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))

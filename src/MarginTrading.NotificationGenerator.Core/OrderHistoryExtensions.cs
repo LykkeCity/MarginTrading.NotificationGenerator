@@ -15,5 +15,17 @@ namespace MarginTrading.NotificationGenerator.Core
                 return x;
             });
         } 
+        
+        public static IEnumerable<OrderHistory> SetInstrumentName(this IEnumerable<OrderHistory> orderHistory, 
+            Dictionary<string, string> instruments)
+        {
+            return orderHistory.Select(x =>
+            {
+                x.ClientId = instruments.TryGetValue(x.Instrument, out var instrumentName) 
+                    ? instrumentName
+                    : x.Instrument;
+                return x;
+            });
+        } 
     }
 }
