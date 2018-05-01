@@ -86,7 +86,6 @@ namespace MarginTrading.NotificationGenerator.Services
                 .Select(x => _convertService.Convert<DataReaderAccountBackendContract, Account>(x))
                 .ToList();
             var clientIds = accounts.Select(x => x.ClientId).Distinct().ToArray();
-            var accountIds = accounts.Select(x => x.Id).Distinct().ToHashSet();
             var accountClients = accounts.ToDictionary(x => x.Id, x => x.ClientId);
             var assetPairNames = (await assetPairsTask).ToDictionary(x => x.Id, x => x.Name);
            
@@ -111,21 +110,21 @@ namespace MarginTrading.NotificationGenerator.Services
                     accountHistoryAggregate.PositionsHistory.Concat(result.PositionsHistory).ToArray();
             }
             
-            var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountIds.Contains(x.AccountId))
+            var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .ToList();
-            var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountIds.Contains(x.AccountId))
+            var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .ToList();
-            var pendingPositions = (await pendingPositionsTask).Where(x => accountIds.Contains(x.AccountId))
+            var pendingPositions = (await pendingPositionsTask).Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
                 .SetInstrumentName(assetPairNames)
                 .ToList();
-            var accountTransactions = accountHistoryAggregate.Account.Where(x => accountIds.Contains(x.AccountId))
+            var accountTransactions = accountHistoryAggregate.Account.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
 
