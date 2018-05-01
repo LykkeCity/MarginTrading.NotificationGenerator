@@ -1,4 +1,4 @@
-﻿namespace Lykke.Job.LykkeJob.Settings.SlackNotifications
+﻿namespace MarginTrading.NotificationGenerator.Settings.SlackNotifications
 {
     public class SlackNotificationsSettings
     {

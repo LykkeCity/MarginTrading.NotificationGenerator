@@ -1,28 +1,35 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AzureStorage.Tables;
 using Common.Log;
+using FluentScheduler;
+using Lykke.Common.Api.Contract.Responses;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
-using Lykke.Common.Api.Contract.Responses;
-using Lykke.Job.LykkeJob.Core.Services;
-using Lykke.Job.LykkeJob.Settings;
-using Lykke.Job.LykkeJob.Modules;
 using Lykke.Logs;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
-#if azurequeuesub
-using Lykke.JobTriggers.Triggers;
-using System.Threading.Tasks;
-#endif
+using MarginTrading.NotificationGenerator.Core;
+using MarginTrading.NotificationGenerator.Core.Services;
+using MarginTrading.NotificationGenerator.Modules;
+using MarginTrading.NotificationGenerator.Scheduling;
+using MarginTrading.NotificationGenerator.Settings;
+using MarginTrading.NotificationGenerator.Settings.JobSettings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MoreLinq;
 
-namespace Lykke.Job.LykkeJob
+#if azurequeuesub
+using Lykke.JobTriggers.Triggers;
+using System.Threading.Tasks;
+#endif
+
+namespace MarginTrading.NotificationGenerator
 {
     public class Startup
     {
@@ -30,11 +37,6 @@ namespace Lykke.Job.LykkeJob
         public IContainer ApplicationContainer { get; private set; }
         public IConfigurationRoot Configuration { get; }
         public ILog Log { get; private set; }
-#if azurequeuesub
-        
-        private TriggerHost _triggerHost;
-        private Task _triggerHostTask;
-#endif
 
         public Startup(IHostingEnvironment env)
         {
@@ -59,7 +61,7 @@ namespace Lykke.Job.LykkeJob
 
                 services.AddSwaggerGen(options =>
                 {
-                    options.DefaultLykkeConfiguration("v1", "LykkeJob API");
+                    options.DefaultLykkeConfiguration("v1", "MT Notification Generator API");
                 });
 
                 var builder = new ContainerBuilder();
@@ -67,8 +69,11 @@ namespace Lykke.Job.LykkeJob
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.CurrentValue.LykkeJobJob, appSettings.Nested(x => x.LykkeJobJob), Log));
-
+                builder.RegisterModule(new JobModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
+                    Log, Environment));
+                builder.RegisterModule(new ExternalServicesModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
+                    Log, Environment));
+                
                 builder.Populate(services);
 
                 ApplicationContainer = builder.Build();
@@ -92,7 +97,7 @@ namespace Lykke.Job.LykkeJob
                 }
 
                 app.UseLykkeForwardedHeaders();
-                app.UseLykkeMiddleware("LykkeJob", ex => new ErrorResponse {ErrorMessage = "Technical problem"});
+                app.UseLykkeMiddleware("NotificationGenerator", ex => new ErrorResponse {ErrorMessage = "Technical problem"});
 
                 app.UseMvc();
                 app.UseSwagger(c =>
@@ -124,12 +129,23 @@ namespace Lykke.Job.LykkeJob
                 // NOTE: Job not yet recieve and process IsAlive requests here
 
                 await ApplicationContainer.Resolve<IStartupManager>().StartAsync();
-#if azurequeuesub
 
-                _triggerHost = new TriggerHost(new AutofacServiceProvider(ApplicationContainer));
+                MtServiceLocator.TradingReportService = ApplicationContainer.Resolve<ITradingReportService>();
 
-                _triggerHostTask = _triggerHost.Start();
-#endif
+                //initialize schedules
+                var registry = new Registry();
+                var settingsCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
+                    .MonthlyTradingReportSettings.InvocationTime;
+                
+                //TODO ToRunEvery(0) FOR TEST PURPOSES
+                registry.Schedule<MonthlyTradingReportJob>().ToRunEvery(1).Months().On(1)
+                    .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
+                JobManager.Initialize(registry);
+                JobManager.JobException += info => Log.WriteError(nameof(NotificationGenerator), nameof(JobManager), info.Exception);
+                
+                JobManager.AllSchedules.ForEach(async x => 
+                    await Log.WriteMonitorAsync(nameof(Startup), nameof(StartApplication), $"{x.Name} - {x.NextRun:s}"));
+                
                 await Log.WriteMonitorAsync("", Program.EnvInfo, "Started");
             }
             catch (Exception ex)
@@ -146,15 +162,6 @@ namespace Lykke.Job.LykkeJob
                 // NOTE: Job still can recieve and process IsAlive requests here, so take care about it if you add logic here.
 
                 await ApplicationContainer.Resolve<IShutdownManager>().StopAsync();
-#if azurequeuesub
-
-                _triggerHost?.Cancel();
-
-                if(_triggerHostTask != null)
-                {
-                    await _triggerHostTask;
-                }
-#endif
             }
             catch (Exception ex)
             {
@@ -197,7 +204,7 @@ namespace Lykke.Job.LykkeJob
 
             aggregateLogger.AddLog(consoleLogger);
 
-            var dbLogConnectionStringManager = settings.Nested(x => x.LykkeJobJob.Db.LogsConnString);
+            var dbLogConnectionStringManager = settings.Nested(x => x.MtNotificationGeneratorSettings.Db.LogsConnString);
             var dbLogConnectionString = dbLogConnectionStringManager.CurrentValue;
 
             if (string.IsNullOrEmpty(dbLogConnectionString))
@@ -210,11 +217,11 @@ namespace Lykke.Job.LykkeJob
                 throw new InvalidOperationException($"LogsConnString {dbLogConnectionString} is not filled in settings");
 
             var persistenceManager = new LykkeLogToAzureStoragePersistenceManager(
-                AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "LykkeJobLog", consoleLogger),
+                AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "NotificationGeneratorLog", consoleLogger),
                 consoleLogger);
 
             // Creating slack notification service, which logs own azure queue processing messages to aggregate log
-            var slackService = services.UseSlackNotificationsSenderViaAzureQueue(new AzureQueueIntegration.AzureQueueSettings
+            var slackService = services.UseSlackNotificationsSenderViaAzureQueue(new Lykke.AzureQueueIntegration.AzureQueueSettings
             {
                 ConnectionString = settings.CurrentValue.SlackNotifications.AzureQueue.ConnectionString,
                 QueueName = settings.CurrentValue.SlackNotifications.AzureQueue.QueueName

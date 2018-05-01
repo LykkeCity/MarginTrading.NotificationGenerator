@@ -1,11 +1,11 @@
-﻿using Lykke.Job.LykkeJob.Settings.JobSettings;
-using Lykke.Job.LykkeJob.Settings.SlackNotifications;
+﻿using MarginTrading.NotificationGenerator.Settings.JobSettings;
+using MarginTrading.NotificationGenerator.Settings.SlackNotifications;
 
-namespace Lykke.Job.LykkeJob.Settings
+namespace MarginTrading.NotificationGenerator.Settings
 {
     public class AppSettings
     {
-        public LykkeJobSettings LykkeJobJob { get; set; }
+        public NotificationGeneratorSettings MtNotificationGeneratorSettings { get; set; }
         public SlackNotificationsSettings SlackNotifications { get; set; }
     }
 }

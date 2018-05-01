@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Lykke.Job.LykkeJob.IncomingMessages;
 using Lykke.JobTriggers.Triggers.Attributes;
+using MarginTrading.NotificationGenerator.IncomingMessages;
 
-namespace Lykke.Job.LykkeJob.AzureQueueHandlers
+namespace MarginTrading.NotificationGenerator.AzureQueueHandlers
 {
     // NOTE: This is the azure queue handlers class example.
     // All handlers are founded and added to the DI container by JobTriggers infrastructure, 

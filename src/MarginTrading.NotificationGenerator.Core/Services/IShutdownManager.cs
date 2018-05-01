@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Lykke.Job.LykkeJob.Core.Services
+namespace MarginTrading.NotificationGenerator.Core.Services
 {
     public interface IShutdownManager
     {
