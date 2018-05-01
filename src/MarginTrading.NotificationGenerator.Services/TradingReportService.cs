@@ -71,6 +71,9 @@ namespace MarginTrading.NotificationGenerator.Services
             var to = _systemClock.UtcNow.Date;
             var reportMonth = _systemClock.UtcNow.Date.AddMonths(-1).Month;
 
+            await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
+                $"Report invoked for {reportMonth} month, period from {from:s} to {to:s}");
+
             //gather data concurrently, await & filter & convert
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
             var accountsTask = _accountsApi.GetAllAccounts();
@@ -134,6 +137,7 @@ namespace MarginTrading.NotificationGenerator.Services
             IReadOnlyDictionary<string, string> emails)
         {
             var failedNotifications = new Dictionary<MonthlyTradingNotification, Exception>();
+            Exception anyException = null;
             foreach (var notification in notifications)
             {
                 try
@@ -148,6 +152,7 @@ namespace MarginTrading.NotificationGenerator.Services
                 }
                 catch (Exception ex)
                 {
+                    anyException = ex;
                     failedNotifications.Add(notification, ex);
                 }
             }
@@ -157,7 +162,7 @@ namespace MarginTrading.NotificationGenerator.Services
                 //TODO handle failed notifications
                 await _log.WriteWarningAsync(nameof(NotificationGenerator), nameof(TradingReportService),
                     nameof(PerformReporting), $"{failedNotifications.Count} notifications failed to be send.",
-                    _systemClock.UtcNow.DateTime);
+                    anyException, _systemClock.UtcNow.DateTime);
             }
         }
 
