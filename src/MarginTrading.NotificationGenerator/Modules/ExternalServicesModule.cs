@@ -43,6 +43,9 @@ namespace MarginTrading.NotificationGenerator.Modules
             builder.RegisterInstance(dataReaderHttpGenerator.Generate<Backend.Contracts.IAccountHistoryApi>())
                 .As<Backend.Contracts.IAccountHistoryApi>()
                 .SingleInstance();
+            builder.RegisterInstance(dataReaderHttpGenerator.Generate<Backend.Contracts.IAssetPairsReadingApi>())
+                .As<Backend.Contracts.IAssetPairsReadingApi>()
+                .SingleInstance();
             
             builder.RegisterLykkeServiceClient(_settings.Services.ClientAccount.Url);
 
