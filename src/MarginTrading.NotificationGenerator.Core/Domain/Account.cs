@@ -15,7 +15,5 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public string LegalEntity { get; set; }
 
         public List<AccountHistory> AccountTransactions { get; set; } = new List<AccountHistory>();
-
-        public decimal InitialBalance { get; set; }
     }
 }

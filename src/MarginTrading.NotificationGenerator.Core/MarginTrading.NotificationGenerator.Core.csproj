@@ -7,9 +7,4 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Lykke.Common" Version="6.4.0" />
   </ItemGroup>
-  <!--#if (rabbitpub) -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\contract\MarginTrading.NotificationGenerator.Contract\MarginTrading.NotificationGenerator.Contract.csproj" />
-  </ItemGroup>
-  <!--#endif -->
 </Project>

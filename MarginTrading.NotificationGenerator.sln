@@ -19,10 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarginTrading.NotificationG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarginTrading.NotificationGenerator.Tests", "tests\MarginTrading.NotificationGenerator.Tests\MarginTrading.NotificationGenerator.Tests.csproj", "{AAC9F450-14D7-4482-BC12-7C55006864E2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Contract", "4. Contract", "{579F7EFC-B394-4D2B-9F42-C1A4293F5C2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarginTrading.NotificationGenerator.Contract", "contract\MarginTrading.NotificationGenerator.Contract\MarginTrading.NotificationGenerator.Contract.csproj", "{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +45,6 @@ Global
 		{AAC9F450-14D7-4482-BC12-7C55006864E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAC9F450-14D7-4482-BC12-7C55006864E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAC9F450-14D7-4482-BC12-7C55006864E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,7 +54,6 @@ Global
 		{D42134F9-A73E-4890-966D-746FE732934E} = {68994F01-8220-4B7C-9AB8-14E137C44AE5}
 		{1322B569-1032-4276-B86E-69F8BE3DC1F7} = {AA5ECC48-14C3-4BE7-AF0C-D59FCA2742C2}
 		{AAC9F450-14D7-4482-BC12-7C55006864E2} = {AB790991-CEB2-44A5-9C0C-A2D26DB86D41}
-		{58FEDF76-9CC9-4B3B-877F-0795CE7C50F9} = {579F7EFC-B394-4D2B-9F42-C1A4293F5C2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2419990-C093-4EE2-AFE9-80857ECBB147}

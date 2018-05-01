@@ -185,8 +185,6 @@ namespace MarginTrading.NotificationGenerator.Services
                     x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
                                                                             && at.AccountId == x.Id)
                         .OrderByDescending(at => at.Date).ToList();
-                    var firstTransaction = x.AccountTransactions.LastOrDefault();
-                    x.InitialBalance = (firstTransaction?.Balance - firstTransaction?.Amount) ?? x.Balance;
                     return x;
                 })
                 .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
