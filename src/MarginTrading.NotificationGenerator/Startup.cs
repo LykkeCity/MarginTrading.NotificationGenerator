@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MoreLinq;
 
 #if azurequeuesub
 using Lykke.JobTriggers.Triggers;
@@ -140,6 +142,9 @@ namespace MarginTrading.NotificationGenerator
                     .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
                 JobManager.Initialize(registry);
                 JobManager.JobException += info => Log.WriteError(nameof(NotificationGenerator), nameof(JobManager), info.Exception);
+                
+                JobManager.AllSchedules.ForEach(async x => 
+                    await Log.WriteMonitorAsync(nameof(Startup), nameof(StartApplication), $"{x.Name} - {x.NextRun:s}"));
                 
                 await Log.WriteMonitorAsync("", Program.EnvInfo, "Started");
             }
