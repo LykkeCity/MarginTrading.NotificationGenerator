@@ -126,9 +126,6 @@ namespace MarginTrading.NotificationGenerator.Services
             //retrieve emails
             var emails = (await _clientAccountClient.GetClientsByIdsAsync(clientIds))
                 .ToDictionary(x => x.Id, x => x.Email);
-            //TODO for testing only
-            emails = emails.Select(x => new KeyValuePair<string, string>(x.Key, "alexey.andreev@lykke.com"))
-                .ToDictionary(x => x.Key, x => x.Value);
 
             await SendNotifications(notifications, emails);
         }
