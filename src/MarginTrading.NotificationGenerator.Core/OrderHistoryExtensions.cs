@@ -21,7 +21,7 @@ namespace MarginTrading.NotificationGenerator.Core
         {
             return orderHistory.Select(x =>
             {
-                x.ClientId = instruments.TryGetValue(x.Instrument, out var instrumentName) 
+                x.Instrument = instruments.TryGetValue(x.Instrument, out var instrumentName) 
                     ? instrumentName
                     : x.Instrument;
                 return x;
