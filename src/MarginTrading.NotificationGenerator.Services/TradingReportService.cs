@@ -71,12 +71,12 @@ namespace MarginTrading.NotificationGenerator.Services
 
         public async Task PerformReporting()
         {
-            var from = _systemClock.UtcNow.Date.AddMonths(-1);
+            var from = _systemClock.UtcNow.Date.AddDays(-1);
             var to = _systemClock.UtcNow.Date;
-            var reportMonth = _systemClock.UtcNow.Date.AddMonths(-1).Month;
+            var reportDay = _systemClock.UtcNow.Date.AddDays(-1).Day;
 
             await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
-                $"Report invoked for {reportMonth} month, period from {from:s} to {to:s}");
+                $"Report invoked for {reportDay} day, period from {from:s} to {to:s}");
 
             //gather data concurrently, await & filter & convert
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
@@ -132,7 +132,7 @@ namespace MarginTrading.NotificationGenerator.Services
 
             //prepare notification models
             var notifications = clientIds.Select(x =>
-                PrepareNotification(reportMonth, from, to, x, closedTrades, openPositions, pendingPositions,
+                PrepareNotification(reportDay, from, to, x, closedTrades, openPositions, pendingPositions,
                     accounts, accountTransactions)).ToList();
 
             //retrieve emails
@@ -142,18 +142,18 @@ namespace MarginTrading.NotificationGenerator.Services
             await SendNotifications(notifications, emails);
         }
 
-        private async Task SendNotifications(IEnumerable<MonthlyTradingNotification> notifications, 
+        private async Task SendNotifications(IEnumerable<DailyTradingNotification> notifications, 
             IReadOnlyDictionary<string, string> emails)
         {
-            var failedNotifications = new Dictionary<MonthlyTradingNotification, Exception>();
+            var failedNotifications = new Dictionary<DailyTradingNotification, Exception>();
             Exception anyException = null;
             foreach (var notification in notifications)
             {
                 try
                 {
                     await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
-                        $"Margin Trading - Monthly trading report for {notification.CurrentMonth}",
-                        "MonthlyTradingReport",
+                        $"Margin Trading - Dayly trading report for {notification.CurrentDay}",
+                        "DaylyTradingReport",
                         notification);
 
                     await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
@@ -175,7 +175,7 @@ namespace MarginTrading.NotificationGenerator.Services
             }
         }
 
-        private static MonthlyTradingNotification PrepareNotification(int reportMonth, 
+        private static DailyTradingNotification PrepareNotification(int reportMonth, 
             DateTime from, DateTime to, string clientId, 
             IReadOnlyList<OrderHistory> closedTrades, IReadOnlyList<OrderHistory> openPositions, 
             IReadOnlyList<OrderHistory> pendingPositions, IReadOnlyList<Account> accounts,
@@ -191,9 +191,9 @@ namespace MarginTrading.NotificationGenerator.Services
                 })
                 .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
             var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
-            return new MonthlyTradingNotification
+            return new DailyTradingNotification
             {
-                CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
+                CurrentDay = from.ToString("dd.MM.yyyy"),
                 From = from.ToString("dd.MM.yyyy"),
                 To = to.ToString("dd.MM.yyyy"),
                 ClientId = clientId,
