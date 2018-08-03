@@ -13,7 +13,7 @@ namespace MarginTrading.NotificationGenerator.Scheduling
         
         public void Execute()
         {
-            MtServiceLocator.TradingReportService.PerformReporting();
+            MtServiceLocator.TradingReportService.PerformReportingMonthly();
         }
 
         public void Dispose()
