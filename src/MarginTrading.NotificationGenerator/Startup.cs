@@ -136,11 +136,7 @@ namespace MarginTrading.NotificationGenerator
                 var registry = new Registry();
                 var settingsCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
                     .MonthlyTradingReportSettings.InvocationTime;
-                
-                //TODO ToRunEvery(0) FOR TEST PURPOSES
-                registry.Schedule<MonthlyTradingReportJob>().ToRunEvery(1).Months().On(1)
-                    .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
-
+           
                 registry.Schedule<DailyTradingReportJob>().ToRunEvery(1).Days()
                     .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
 
