@@ -225,8 +225,8 @@ namespace MarginTrading.NotificationGenerator.Services
                 try
                 {
                     await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
-                        $"Margin Trading - Dayly trading report for {notification.CurrentDay}",
-                        "DaylyTradingReport",
+                        $"Margin Trading - Daily trading report for {notification.CurrentDay}",
+                        "DailyTradingReport",
                         notification);
 
                     await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
