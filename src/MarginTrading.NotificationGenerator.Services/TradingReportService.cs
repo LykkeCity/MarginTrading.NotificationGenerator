@@ -257,8 +257,11 @@ namespace MarginTrading.NotificationGenerator.Services
             var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
                 .Select(x =>
                 {
+                    
                     x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
-                                                                            && at.AccountId == x.Id)
+                                                                            && at.AccountId == x.Id
+                                                                            && openPositions.Count(op => op.ClientId == clientId
+                                                                            && op.AccountId == x.Id) != 0)
                         .OrderByDescending(at => at.Date).ToList();
                     return x;
                 })

@@ -52,7 +52,9 @@ namespace MarginTrading.NotificationGenerator.Modules
             builder.RegisterInstance(_settings).As<NotificationGeneratorSettings>().SingleInstance();
             
             builder.RegisterInstance(_settings.MonthlyTradingReportSettings.Filter).AsSelf().SingleInstance();
-            
+
+            builder.RegisterInstance(_settings.DailyTradingReportSettings.Filter).AsSelf().SingleInstance();
+
             builder.RegisterType<SystemClock>().As<ISystemClock>().SingleInstance();
             
             builder.RegisterType<EmailService>().As<IEmailService>().SingleInstance();
