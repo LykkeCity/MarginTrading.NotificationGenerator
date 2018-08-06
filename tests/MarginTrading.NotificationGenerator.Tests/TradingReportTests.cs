@@ -41,7 +41,7 @@ namespace MarginTrading.NotificationGenerator.Tests
                     Filter = new TradingReportFilter {LegalEntityRegex = "^LYKKECY$"},
                     InvocationTime = new TimeSpan(0, 0, 0),
                 },
-                DailyTradingReportSettings = new NotificationsSettings
+                DailyTradingReportSettings = new DailyNotificationsSettings
                 {
                     EmailNotificationEnabled = true,
                     Filter = new TradingReportFilter { LegalEntityRegex = "^LYKKECY$" },
