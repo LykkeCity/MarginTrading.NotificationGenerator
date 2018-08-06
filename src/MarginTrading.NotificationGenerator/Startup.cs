@@ -138,7 +138,7 @@ namespace MarginTrading.NotificationGenerator
                     .MonthlyTradingReportSettings.InvocationTime;
 
                 var settingsDailyCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
-                    .MonthlyTradingReportSettings.InvocationTime;
+                    .DailyTradingReportSettings.InvocationTime;
 
                 registry.Schedule<MonthlyTradingReportJob>().ToRunEvery(1).Months().On(1)
                     .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
