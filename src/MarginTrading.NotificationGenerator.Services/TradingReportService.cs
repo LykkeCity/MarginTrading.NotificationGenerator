@@ -78,57 +78,8 @@ namespace MarginTrading.NotificationGenerator.Services
             await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
                 $"Report invoked for {reportDay} day, period from {from:s} to {to:s}");
 
-            //gather data concurrently, await & filter & convert
-            var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
-            var accountsTask = _accountsApi.GetAllAccounts();
-            var assetPairsTask = _assetPairsReadingApi.List();
-
-            var accounts = (await accountsTask).Where(x => LegalEntityPredicate(x.LegalEntity))
-                .Select(x => _convertService.Convert<DataReaderAccountBackendContract, Account>(x))
-                .ToList();
-            var clientIds = accounts.Select(x => x.ClientId).Distinct().ToArray();
-            var accountClients = accounts.ToDictionary(x => x.Id, x => x.ClientId);
-            var assetPairNames = (await assetPairsTask).ToDictionary(x => x.Id, x => x.Name);
-           
-            var accountHistoryAggregate = new AccountHistoryResponse
-            {
-                Account = new AccountHistoryContract[0],
-                OpenPositions = new OrderHistoryContract[0],
-                PositionsHistory = new OrderHistoryContract[0]
-            };
-            foreach (var clientId in clientIds)
-            {//TODO batch launcher on semaphores?
-                var result = await _accountHistoryApi.ByTypes(new AccountHistoryRequest
-                {
-                    ClientId = clientId,
-                    From = from, 
-                    To = to,
-                });
-                accountHistoryAggregate.Account = accountHistoryAggregate.Account.Concat(result.Account).ToArray();
-                accountHistoryAggregate.OpenPositions =
-                    accountHistoryAggregate.OpenPositions.Concat(result.OpenPositions).ToArray();
-                accountHistoryAggregate.PositionsHistory =
-                    accountHistoryAggregate.PositionsHistory.Concat(result.PositionsHistory).ToArray();
-            }
-            
-            var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
-                .DistinctBy(x => x.Id)
-                .SetClientId(accountClients)
-                .SetInstrumentName(assetPairNames)
-                .ToList();
-            var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
-                .SetClientId(accountClients)
-                .SetInstrumentName(assetPairNames)
-                .ToList();
-            var pendingPositions = (await pendingPositionsTask).Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
-                .SetInstrumentName(assetPairNames)
-                .ToList();
-            var accountTransactions = accountHistoryAggregate.Account.Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
-                .ToList();
+           (string[] clientIds , List<Account> accounts,List<OrderHistory> closedTrades,List<OrderHistory> openPositions,List<OrderHistory> pendingPositions,List<AccountHistory> accountTransactions) =
+               await GetDataForNotifications(to, from);
 
             //prepare notification models
             var notifications = clientIds.Select(x =>
@@ -151,6 +102,168 @@ namespace MarginTrading.NotificationGenerator.Services
             await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
                 $"Report invoked for {reportMonth} month, period from {from:s} to {to:s}");
 
+            (string[] clientIds, List<Account> accounts, List<OrderHistory> closedTrades, List<OrderHistory> openPositions, List<OrderHistory> pendingPositions, List<AccountHistory> accountTransactions) =
+                await GetDataForNotifications(to, from);
+
+            //prepare notification models
+            var notifications = clientIds.Select(x =>
+                PrepareNotificationMonthly(reportMonth, from, to, x, closedTrades, openPositions, pendingPositions,
+                    accounts, accountTransactions)).ToList();
+
+            //retrieve emails
+            var emails = (await _clientAccountClient.GetClientsByIdsAsync(clientIds))
+                .ToDictionary(x => x.Id, x => x.Email);
+
+            await SendNotificationsMonthly(notifications, emails);
+        }
+
+        private async Task SendNotifications(IEnumerable<DailyTradingNotification> notifications, 
+            IReadOnlyDictionary<string, string> emails)
+        {
+            var failedNotifications = new Dictionary<DailyTradingNotification, Exception>();
+            Exception anyException = null;
+            foreach (var notification in notifications)
+            {
+                if (notification.ClosedTrades.Any() || notification.OpenPositions.Any() ||
+                    notification.PendingPositions.Any())
+                {
+                    try
+                    {
+                        await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
+                            $"Margin Trading - Daily trading report for {notification.CurrentDay}",
+                            "DailyTradingReport",
+                            notification);
+
+                        await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
+                            nameof(PerformReporting), notification.GetLogData(), _systemClock.UtcNow.DateTime);
+                    }
+                    catch (Exception ex)
+                    {
+                        anyException = ex;
+                        failedNotifications.Add(notification, ex);
+                    }
+                }
+            }
+
+            if (failedNotifications.Any())
+            {
+                //TODO handle failed notifications
+                await _log.WriteWarningAsync(nameof(NotificationGenerator), nameof(TradingReportService),
+                    nameof(PerformReporting), $"{failedNotifications.Count} notifications failed to be send.",
+                    anyException, _systemClock.UtcNow.DateTime);
+            }
+        }
+
+        private static DailyTradingNotification PrepareNotification(int reportDay, 
+            DateTime from, DateTime to, string clientId, 
+            IReadOnlyList<OrderHistory> closedTrades, IReadOnlyList<OrderHistory> openPositions, 
+            IReadOnlyList<OrderHistory> pendingPositions, IReadOnlyList<Account> accounts,
+            IReadOnlyList<AccountHistory> accountTransactions)
+        {
+            var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
+                .Select(x =>
+                {
+                    
+                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
+                                                                            && at.AccountId == x.Id)
+                        .OrderByDescending(at => at.Date).ToList();
+                    return x;
+                })
+                .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
+            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
+            return new DailyTradingNotification
+            {
+                CurrentDay = from.ToString("dd.MM.yyyy"),
+                From = from.ToString("dd.MM.yyyy"),
+                To = to.ToString("dd.MM.yyyy"),
+                ClientId = clientId,
+                ClosedTrades = closedTrades
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.CloseDate).ToList(),
+                OpenPositions = openPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.OpenDate).ToList(),
+                PendingPositions = pendingPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.CreateDate).ToList(),
+                Accounts = filteredAccounts,
+            };
+        }
+
+        private async Task SendNotificationsMonthly(IEnumerable<MonthlyTradingNotification> notifications,
+         IReadOnlyDictionary<string, string> emails)
+        {
+            var failedNotifications = new Dictionary<MonthlyTradingNotification, Exception>();
+            Exception anyException = null;
+            foreach (var notification in notifications)
+            {             
+                    try
+                    {
+                        await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
+                            $"Margin Trading - Monthly trading report for {notification.CurrentMonth}",
+                            "MonthlyTradingReport",
+                            notification);
+
+                        await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
+                            nameof(PerformReporting), notification.GetLogData(), _systemClock.UtcNow.DateTime);
+                    }
+                    catch (Exception ex)
+                    {
+                        anyException = ex;
+                        failedNotifications.Add(notification, ex);
+                    }
+            }
+            
+
+         
+
+            if (failedNotifications.Any())
+            {
+                //TODO handle failed notifications
+                await _log.WriteWarningAsync(nameof(NotificationGenerator), nameof(TradingReportService),
+                    nameof(PerformReporting), $"{failedNotifications.Count} notifications failed to be send.",
+                    anyException, _systemClock.UtcNow.DateTime);
+            }
+        }
+
+        private static MonthlyTradingNotification PrepareNotificationMonthly(int reportMonth,
+            DateTime from, DateTime to, string clientId,
+            IReadOnlyList<OrderHistory> closedTrades, IReadOnlyList<OrderHistory> openPositions,
+            IReadOnlyList<OrderHistory> pendingPositions, IReadOnlyList<Account> accounts,
+            IReadOnlyList<AccountHistory> accountTransactions)
+        {
+            var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
+                .Select(x =>
+                {
+                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
+                                                                            && at.AccountId == x.Id)
+                        .OrderByDescending(at => at.Date).ToList();
+                    return x;
+                })
+                .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
+            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
+            return new MonthlyTradingNotification
+            {
+                CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
+                From = from.ToString("dd.MM.yyyy"),
+                To = to.ToString("dd.MM.yyyy"),
+                ClientId = clientId,
+                ClosedTrades = closedTrades
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.CloseDate).ToList(),
+                OpenPositions = openPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.OpenDate).ToList(),
+                PendingPositions = pendingPositions
+                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
+                    .OrderByDescending(x => x.CreateDate).ToList(),
+                Accounts = filteredAccounts,
+            };
+        }
+
+        private async Task<(string[], List<Account> ,List<OrderHistory>, List<OrderHistory>, List<OrderHistory>, List<AccountHistory>)>
+            GetDataForNotifications(DateTime to, DateTime from)
+        {
             //gather data concurrently, await & filter & convert
             var pendingPositionsTask = _tradeMonitoringReadingApi.PendingOrders();
             var accountsTask = _accountsApi.GetAllAccounts();
@@ -203,152 +316,9 @@ namespace MarginTrading.NotificationGenerator.Services
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
 
-            //prepare notification models
-            var notifications = clientIds.Select(x =>
-                PrepareNotificationMonthly(reportMonth, from, to, x, closedTrades, openPositions, pendingPositions,
-                    accounts, accountTransactions)).ToList();
+            return (clientIds, accounts, closedTrades, openPositions, pendingPositions, accountTransactions);
 
-            //retrieve emails
-            var emails = (await _clientAccountClient.GetClientsByIdsAsync(clientIds))
-                .ToDictionary(x => x.Id, x => x.Email);
-
-            await SendNotificationsMonthly(notifications, emails);
         }
 
-        private async Task SendNotifications(IEnumerable<DailyTradingNotification> notifications, 
-            IReadOnlyDictionary<string, string> emails)
-        {
-            var failedNotifications = new Dictionary<DailyTradingNotification, Exception>();
-            Exception anyException = null;
-            foreach (var notification in notifications)
-            {
-                try
-                {
-                    await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
-                        $"Margin Trading - Daily trading report for {notification.CurrentDay}",
-                        "DailyTradingReport",
-                        notification);
-
-                    await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
-                        nameof(PerformReporting), notification.GetLogData(), _systemClock.UtcNow.DateTime);
-                }
-                catch (Exception ex)
-                {
-                    anyException = ex;
-                    failedNotifications.Add(notification, ex);
-                }
-            }
-
-            if (failedNotifications.Any())
-            {
-                //TODO handle failed notifications
-                await _log.WriteWarningAsync(nameof(NotificationGenerator), nameof(TradingReportService),
-                    nameof(PerformReporting), $"{failedNotifications.Count} notifications failed to be send.",
-                    anyException, _systemClock.UtcNow.DateTime);
-            }
-        }
-
-        private static DailyTradingNotification PrepareNotification(int reportDay, 
-            DateTime from, DateTime to, string clientId, 
-            IReadOnlyList<OrderHistory> closedTrades, IReadOnlyList<OrderHistory> openPositions, 
-            IReadOnlyList<OrderHistory> pendingPositions, IReadOnlyList<Account> accounts,
-            IReadOnlyList<AccountHistory> accountTransactions)
-        {
-            var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
-                .Select(x =>
-                {
-                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
-                                                                            && at.AccountId == x.Id)
-                        .OrderByDescending(at => at.Date).ToList();
-                    return x;
-                })
-                .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
-            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
-            return new DailyTradingNotification
-            {
-                CurrentDay = from.ToString("dd.MM.yyyy"),
-                From = from.ToString("dd.MM.yyyy"),
-                To = to.ToString("dd.MM.yyyy"),
-                ClientId = clientId,
-                ClosedTrades = closedTrades
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CloseDate).ToList(),
-                OpenPositions = openPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.OpenDate).ToList(),
-                PendingPositions = pendingPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CreateDate).ToList(),
-                Accounts = filteredAccounts,
-            };
-        }
-
-        private async Task SendNotificationsMonthly(IEnumerable<MonthlyTradingNotification> notifications,
-         IReadOnlyDictionary<string, string> emails)
-        {
-            var failedNotifications = new Dictionary<MonthlyTradingNotification, Exception>();
-            Exception anyException = null;
-            foreach (var notification in notifications)
-            {
-                try
-                {
-                    await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
-                        $"Margin Trading - Monthly trading report for {notification.CurrentMonth}",
-                        "MonthlyTradingReport",
-                        notification);
-
-                    await _log.WriteInfoAsync(nameof(NotificationGenerator), nameof(TradingReportService),
-                        nameof(PerformReporting), notification.GetLogData(), _systemClock.UtcNow.DateTime);
-                }
-                catch (Exception ex)
-                {
-                    anyException = ex;
-                    failedNotifications.Add(notification, ex);
-                }
-            }
-
-            if (failedNotifications.Any())
-            {
-                //TODO handle failed notifications
-                await _log.WriteWarningAsync(nameof(NotificationGenerator), nameof(TradingReportService),
-                    nameof(PerformReporting), $"{failedNotifications.Count} notifications failed to be send.",
-                    anyException, _systemClock.UtcNow.DateTime);
-            }
-        }
-
-        private static MonthlyTradingNotification PrepareNotificationMonthly(int reportMonth,
-            DateTime from, DateTime to, string clientId,
-            IReadOnlyList<OrderHistory> closedTrades, IReadOnlyList<OrderHistory> openPositions,
-            IReadOnlyList<OrderHistory> pendingPositions, IReadOnlyList<Account> accounts,
-            IReadOnlyList<AccountHistory> accountTransactions)
-        {
-            var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
-                .Select(x =>
-                {
-                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
-                                                                            && at.AccountId == x.Id)
-                        .OrderByDescending(at => at.Date).ToList();
-                    return x;
-                })
-                .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
-            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
-            return new MonthlyTradingNotification
-            {
-                CurrentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(reportMonth),
-                From = from.ToString("dd.MM.yyyy"),
-                To = to.ToString("dd.MM.yyyy"),
-                ClientId = clientId,
-                ClosedTrades = closedTrades
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CloseDate).ToList(),
-                OpenPositions = openPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.OpenDate).ToList(),
-                PendingPositions = pendingPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CreateDate).ToList(),
-                Accounts = filteredAccounts,
-            };
-        }
     }
 }

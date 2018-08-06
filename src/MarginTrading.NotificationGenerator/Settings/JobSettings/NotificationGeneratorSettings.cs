@@ -7,5 +7,7 @@
         public ServicesSettings Services { get; set; }
         
         public NotificationsSettings MonthlyTradingReportSettings { get; set; } 
+
+        public NotificationsSettings DailyTradingReportSettings { get; set; }
     }
 }
