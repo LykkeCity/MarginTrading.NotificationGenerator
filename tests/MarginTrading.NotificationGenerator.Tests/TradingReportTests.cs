@@ -40,8 +40,16 @@ namespace MarginTrading.NotificationGenerator.Tests
                     EmailNotificationEnabled = true,
                     Filter = new TradingReportFilter {LegalEntityRegex = "^LYKKECY$"},
                     InvocationTime = new TimeSpan(0, 0, 0),
-                }, 
+                },
+                DailyTradingReportSettings = new NotificationsSettings
+                {
+                    EmailNotificationEnabled = true,
+                    Filter = new TradingReportFilter { LegalEntityRegex = "^LYKKECY$" },
+                    InvocationTime = new TimeSpan(0, 0, 0),
+                }
             };
+
+
             builder.RegisterModule(new JobModule(fakeSettings, _log, hostingEnvMock.Object));
             var externalMockModule = new ExternalServiceMockModule(_log);
             EmailSenderMock = externalMockModule.EmailSenderMock;
@@ -62,7 +70,8 @@ namespace MarginTrading.NotificationGenerator.Tests
         public void Simple_Success_Scenario()
         {
             TradingReportService.PerformReporting();
-/*
+            TradingReportService.PerformReportingMonthly();
+/*          
             var clientAccounts = ClientAccountClientMock.GetClientAccounts().ToList();
             EmailSenderMock.Verify(x => x.SendAsync(It.IsAny<EmailMessage>(),
                 It.Is<EmailAddressee>(a =>
