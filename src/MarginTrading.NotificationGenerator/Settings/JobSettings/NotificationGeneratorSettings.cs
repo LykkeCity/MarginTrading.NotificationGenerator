@@ -8,6 +8,6 @@
         
         public NotificationsSettings MonthlyTradingReportSettings { get; set; } 
 
-        public NotificationsSettings DailyTradingReportSettings { get; set; }
+        public DailyNotificationsSettings DailyTradingReportSettings { get; set; }
     }
 }
