@@ -2,9 +2,9 @@
 
 namespace MarginTrading.NotificationGenerator.Core.Domain
 {
-    public class MonthlyTradingNotification
+    public class PeriodicTradingNotification
     {
-        public string CurrentMonth { get; set; }
+        public string CurrentPeriod { get; set; }
         public string From { get; set; }
         public string To { get; set; }
         public string ClientId { get; set; }
@@ -13,10 +13,13 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public List<OrderHistory> OpenPositions { get; set; }
         public List<OrderHistory> PendingPositions { get; set; }
         public List<Account> Accounts { get; set; }
+        
+        public OvernightSwapReportType ReportType { get; set; }
 
         public string GetLogData()
         {
-            return $"{nameof(MonthlyTradingNotification)} for {ClientId} sent. Closed trades: {ClosedTrades.Count}, open positions: {OpenPositions.Count}, pending orders: {PendingPositions.Count}, accounts: {Accounts.Count}.";
+            return ReportType == OvernightSwapReportType.Daily ? $"Daily" : $"Monthly"
+                + $" trading notification for {ClientId} sent. Closed trades: {ClosedTrades.Count}, open positions: {OpenPositions.Count}, pending orders: {PendingPositions.Count}, accounts: {Accounts.Count}.";   
         }
     }
 }

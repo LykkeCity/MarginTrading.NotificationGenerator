@@ -1,4 +1,6 @@
-﻿namespace MarginTrading.NotificationGenerator.Settings.JobSettings
+﻿using MarginTrading.NotificationGenerator.Core.Settings;
+
+namespace MarginTrading.NotificationGenerator.Settings.JobSettings
 {
     public class NotificationGeneratorSettings
     {
@@ -8,6 +10,6 @@
         
         public NotificationsSettings MonthlyTradingReportSettings { get; set; } 
 
-        public DailyNotificationsSettings DailyTradingReportSettings { get; set; }
+        public NotificationsSettings DailyTradingReportSettings { get; set; }
     }
 }
