@@ -206,7 +206,9 @@ namespace MarginTrading.NotificationGenerator.Services
                 .ToList();
             var clientIds = accounts.Select(x => x.ClientId).Distinct().ToArray();
             var accountClients = accounts.ToDictionary(x => x.Id, x => x.ClientId);
-            var assetPairNames = (await assetPairsTask).ToDictionary(x => x.Id, x => x.Name);
+            var assetPairs = await assetPairsTask;
+            var assetPairNames = assetPairs.ToDictionary(x => x.Id, x => x.Name);
+            var assetPairAccuracy = assetPairs.ToDictionary(x => x.Id, x => x.Accuracy);
 
             var accountHistoryAggregate = new AccountHistoryResponse
             {
@@ -230,18 +232,18 @@ namespace MarginTrading.NotificationGenerator.Services
             }
 
             var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
+                .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderHistoryContract, OrderHistory>(x)))
                 .DistinctBy(x => x.Id)
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .ToList();
             var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderHistoryContract, OrderHistory>(x))
+                .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderHistoryContract, OrderHistory>(x)))
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .ToList();
             var pendingPositions = (await pendingPositionsTask).Where(x => accountClients.ContainsKey(x.AccountId))
-                .Select(x => _convertService.Convert<OrderContract, OrderHistory>(x))
+                .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderContract, OrderHistory>(x)))
                 .SetInstrumentName(assetPairNames)
                 .ToList();
             var accountTransactions = accountHistoryAggregate.Account.Where(x => accountClients.ContainsKey(x.AccountId))
@@ -252,5 +254,9 @@ namespace MarginTrading.NotificationGenerator.Services
 
         }
 
+        private static OrderHistory Convert(IReadOnlyDictionary<string, int> accuracy, OrderHistory orderHistory)
+        {
+            return orderHistory.ApplyPriceAccuracy(accuracy[orderHistory.Instrument]);
+        }
     }
 }
