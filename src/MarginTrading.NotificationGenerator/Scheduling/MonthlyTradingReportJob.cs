@@ -1,9 +1,12 @@
 ﻿using System;
 using FluentScheduler;
+using JetBrains.Annotations;
 using MarginTrading.NotificationGenerator.Core;
+using MarginTrading.NotificationGenerator.Core.Domain;
 
 namespace MarginTrading.NotificationGenerator.Scheduling
 {
+    [UsedImplicitly]
     public class MonthlyTradingReportJob : IJob, IDisposable
     {
         public MonthlyTradingReportJob()
@@ -13,7 +16,7 @@ namespace MarginTrading.NotificationGenerator.Scheduling
         
         public void Execute()
         {
-            MtServiceLocator.TradingReportService.PerformReportingMonthly();
+            MtServiceLocator.TradingReportService.PerformReporting(OvernightSwapReportType.Monthly);
         }
 
         public void Dispose()

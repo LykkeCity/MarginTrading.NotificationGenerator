@@ -50,10 +50,6 @@ namespace MarginTrading.NotificationGenerator.Modules
             // TODO: Add your dependencies here
             
             builder.RegisterInstance(_settings).As<NotificationGeneratorSettings>().SingleInstance();
-            
-            builder.RegisterInstance(_settings.MonthlyTradingReportSettings.Filter).AsSelf().SingleInstance();
-
-            builder.RegisterInstance(_settings.DailyTradingReportSettings.Filter).AsSelf().SingleInstance();
 
             builder.RegisterType<SystemClock>().As<ISystemClock>().SingleInstance();
             
@@ -63,7 +59,14 @@ namespace MarginTrading.NotificationGenerator.Modules
                 new MustacheTemplateGenerator(_environment, "EmailTemplates")
             ).SingleInstance();
             
-            builder.RegisterType<TradingReportService>().As<ITradingReportService>().SingleInstance();
+            builder.RegisterType<TradingReportService>()
+                .As<ITradingReportService>()
+                .WithParameters(new []
+                {
+                    new NamedParameter("monthlyNotificationsSettings", _settings.MonthlyTradingReportSettings),
+                    new NamedParameter("dailyNotificationsSettings", _settings.DailyTradingReportSettings), 
+                })
+                .SingleInstance();
             
             builder.RegisterType<ConvertService>().As<IConvertService>().SingleInstance();
 

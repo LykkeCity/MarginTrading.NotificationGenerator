@@ -1,4 +1,6 @@
-﻿namespace MarginTrading.NotificationGenerator.Settings.JobSettings
+﻿using Lykke.SettingsReader.Attributes;
+
+namespace MarginTrading.NotificationGenerator.Settings.JobSettings
 {
     public class ServicesSettings
     {
