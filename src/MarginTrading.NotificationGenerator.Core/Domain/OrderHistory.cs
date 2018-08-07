@@ -37,5 +37,17 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public decimal? StopLoss { get; set; }
         
         public decimal PnL { get; set; }
+
+        public OrderHistory ApplyPriceAccuracy(int accuracy)
+        {
+            ExpectedOpenPrice = Math.Round(ExpectedOpenPrice, accuracy);
+            OpenPrice = Math.Round(OpenPrice, accuracy);
+            ClosePrice = Math.Round(ClosePrice, accuracy);
+            if(TakeProfit.HasValue)
+                TakeProfit = Math.Round(TakeProfit.Value, accuracy);
+            if(StopLoss.HasValue)
+                StopLoss = Math.Round(StopLoss.Value, accuracy);
+            return this;
+        }
     }
 }
