@@ -136,10 +136,16 @@ namespace MarginTrading.NotificationGenerator
                 var registry = new Registry();
                 var settingsCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
                     .MonthlyTradingReportSettings.InvocationTime;
-                
-                //TODO ToRunEvery(0) FOR TEST PURPOSES
+
+                var settingsDailyCalcTime = ApplicationContainer.Resolve<NotificationGeneratorSettings>()
+                    .DailyTradingReportSettings.InvocationTime;
+
                 registry.Schedule<MonthlyTradingReportJob>().ToRunEvery(1).Months().On(1)
                     .At(settingsCalcTime.Hours, settingsCalcTime.Minutes);
+
+                registry.Schedule<DailyTradingReportJob>().ToRunEvery(1).Days()
+                    .At(settingsDailyCalcTime.Hours, settingsDailyCalcTime.Minutes);
+
                 JobManager.Initialize(registry);
                 JobManager.JobException += info => Log.WriteError(nameof(NotificationGenerator), nameof(JobManager), info.Exception);
                 

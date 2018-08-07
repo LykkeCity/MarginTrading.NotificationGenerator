@@ -7,16 +7,16 @@ using MarginTrading.NotificationGenerator.Core.Domain;
 namespace MarginTrading.NotificationGenerator.Scheduling
 {
     [UsedImplicitly]
-    public class MonthlyTradingReportJob : IJob, IDisposable
+    public class DailyTradingReportJob : IJob, IDisposable
     {
-        public MonthlyTradingReportJob()
+        public DailyTradingReportJob()
         {
-            
+
         }
-        
+
         public void Execute()
         {
-            MtServiceLocator.TradingReportService.PerformReporting(OvernightSwapReportType.Monthly);
+            MtServiceLocator.TradingReportService.PerformReporting(OvernightSwapReportType.Daily);
         }
 
         public void Dispose()

@@ -2,6 +2,6 @@
 {
     public class TradingReportFilter
     {
-        public  string LegalEntityRegex { get; set; }
+        public string LegalEntityRegex { get; set; }
     }
 }

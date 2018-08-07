@@ -1,7 +1,6 @@
 ﻿using System;
-using MarginTrading.NotificationGenerator.Core.Settings;
 
-namespace MarginTrading.NotificationGenerator.Settings.JobSettings
+namespace MarginTrading.NotificationGenerator.Core.Settings
 {
     public class NotificationsSettings
     {

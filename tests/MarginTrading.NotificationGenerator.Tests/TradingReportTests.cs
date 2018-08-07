@@ -3,6 +3,7 @@ using System.Linq;
 using Autofac;
 using Common.Log;
 using Lykke.Service.EmailSender;
+using MarginTrading.NotificationGenerator.Core.Domain;
 using MarginTrading.NotificationGenerator.Core.Services;
 using MarginTrading.NotificationGenerator.Core.Settings;
 using MarginTrading.NotificationGenerator.Modules;
@@ -40,8 +41,10 @@ namespace MarginTrading.NotificationGenerator.Tests
                     EmailNotificationEnabled = true,
                     Filter = new TradingReportFilter {LegalEntityRegex = "^LYKKECY$"},
                     InvocationTime = new TimeSpan(0, 0, 0),
-                }, 
+                }
             };
+
+
             builder.RegisterModule(new JobModule(fakeSettings, _log, hostingEnvMock.Object));
             var externalMockModule = new ExternalServiceMockModule(_log);
             EmailSenderMock = externalMockModule.EmailSenderMock;
@@ -61,8 +64,9 @@ namespace MarginTrading.NotificationGenerator.Tests
         [Test]
         public void Simple_Success_Scenario()
         {
-            TradingReportService.PerformReporting();
-/*
+            TradingReportService.PerformReporting(OvernightSwapReportType.Daily);
+            TradingReportService.PerformReporting(OvernightSwapReportType.Monthly);
+/*          
             var clientAccounts = ClientAccountClientMock.GetClientAccounts().ToList();
             EmailSenderMock.Verify(x => x.SendAsync(It.IsAny<EmailMessage>(),
                 It.Is<EmailAddressee>(a =>
