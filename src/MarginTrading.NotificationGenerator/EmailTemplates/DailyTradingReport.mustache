@@ -27,23 +27,24 @@
         {{#Accounts}}
             <tr style="margin-top: 10px;">
                 <td style="padding:0 40px 0 40px;">
-                    <p style="font-size: 1.0em;line-height: 180%;">
-                        {{BaseAssetId}} account balance: {{Balance}}.
+                    <p style="font-size: 1.0em;line-height: 180%;margin-bottom: 10px;">
+                        Account: {{Id}}     Currency: {{BaseAssetId}}
                     </p>
+                    <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Cash Transactions</p>
                     <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                         <tr>
-                            <td>Date</td>
+                            <td>Id</td>
+                            <th>Time</th>
+                            <th>Cash Type</th>
                             <th>Amount</th>
-                            <th>Balance</th>
-                            <th>Type</th>
                             <th>Comment</th>
                         </tr>
                         {{#AccountTransactions}}
                             <tr>
+                                <td style="text-align: center">{{Id}}</td>
                                 <td style="text-align: center">{{Date}}</td>
-                                <td style="text-align: center">{{Amount}}</td>
-                                <td style="text-align: center">{{Balance}}</td>
                                 <td style="text-align: center">{{Type}}</td>
+                                <td style="text-align: center">{{Amount}}</td>
                                 <td style="text-align: center">{{Comment}}</td>
                             </tr>
                         {{/AccountTransactions}}
@@ -58,9 +59,10 @@
         {{/Accounts}}
         <tr>
             <td style="padding:0 40px 0 40px;">
-                <p style="font-size: 1.0em;line-height: 180%;">Open positions</p>
+                <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Open Positions</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
+                        <td>Id</td>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Open Price</th>
@@ -72,6 +74,7 @@
                     </tr>
                     {{#OpenPositions}}
                         <tr>
+                            <td style="text-align: center">{{Id}}</td>
                             <td style="text-align: center">{{Instrument}}</td>
                             <td style="text-align: center">{{Type}}</td>
                             <td style="text-align: center">{{OpenPrice}}</td>
@@ -92,9 +95,10 @@
         </tr>
         <tr>
             <td style="padding:0 40px 0 40px;">
-                <p style="font-size: 1.0em;line-height: 180%;">Pending orders</p>
+                <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Pending Orders</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
+                        <td>Id</td>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Pending Order Target Price</th>
@@ -104,6 +108,7 @@
                     </tr>
                     {{#PendingPositions}}
                         <tr>
+                            <td style="text-align: center">{{Id}}</td>
                             <td style="text-align: center">{{Instrument}}</td>
                             <td style="text-align: center">{{Type}}</td>
                             <td style="text-align: center">{{ExpectedOpenPrice}}</td>
@@ -122,9 +127,10 @@
         </tr>
         <tr>
             <td style="padding:0 40px 0 40px;">
-                <p style="font-size: 1.0em;line-height: 180%;">Closed trades</p>
+                <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Closed Trades</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
+                        <td>Id</td>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Volume</th>
@@ -137,6 +143,7 @@
                     </tr>
                     {{#ClosedTrades}}
                         <tr>
+                            <td style="text-align: center">{{Id}}</td>
                             <td style="text-align: center">{{Instrument}}</td>
                             <td style="text-align: center">{{Type}}</td>
                             <td style="text-align: center">{{Volume}}</td>
@@ -153,6 +160,29 @@
                             <td style="text-align: center" colspan="9">No closed trades</td>
                         </tr>
                     {{/ClosedTrades}}
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:0 40px 0 40px;">
+                <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">A/C Summary</p>
+                <table border="0" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: center">Closed Trades PnL: {{ClosedTradesPnl}}</td>
+                        <td style="text-align: center">Floating PnL: {{FloatingPnl}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">Cash Transactions: {{CashTransactions}}</td>
+                        <td style="text-align: center">Equity: {{Equity}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">Change in Balance: {{ChangeInBalance}}</td>
+                        <td style="text-align: center">Margin Requirements: {{MarginRequirements}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">Balance: {{Balance}}</td>
+                        <td style="text-align: center">Available Margin: {{AvailableMargin}}</td>
+                    </tr>
                 </table>
             </td>
         </tr>

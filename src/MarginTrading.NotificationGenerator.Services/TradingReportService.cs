@@ -156,17 +156,33 @@ namespace MarginTrading.NotificationGenerator.Services
 
         private static PeriodicTradingNotification PrepareNotification(OvernightSwapReportType reportType, 
             DateTime from, DateTime to, string clientId, 
-            IEnumerable<OrderHistory> closedTrades, IEnumerable<OrderHistory> openPositions, 
+            IReadOnlyCollection<OrderHistory> closedTrades, IReadOnlyCollection<OrderHistory> openPositions, 
             IEnumerable<OrderHistory> pendingPositions, IEnumerable<Account> accounts,
             IEnumerable<AccountHistory> accountTransactions)
         {
+            var orderInstruments = closedTrades.Concat(openPositions).ToDictionary(x => x.Id, x => x.Instrument);
             var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
                 .Select(x =>
                 {
-                    
                     x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
                                                                             && at.AccountId == x.Id)
+                        .Select(at =>
+                        {
+                            at.Comment = orderInstruments.TryGetValue(at.OrderId, out var instrument)
+                                ? $"{instrument}: {at.OrderId}"
+                                : at.Comment;
+                            return at;
+                        })
                         .OrderByDescending(at => at.Date).ToList();
+
+                    x.ClosedTradesPnl = closedTrades.Sum(ct => ct.PnL);
+                    x.FloatingPnl = openPositions.Sum(op => op.PnL);
+                    x.CashTransactions = x.AccountTransactions.Sum(at => at.Amount);
+                    x.Equity = x.Balance - x.FloatingPnl;
+                    x.ChangeInBalance = x.ClosedTradesPnl + x.CashTransactions;
+                    x.MarginRequirements = openPositions.Sum(x => x.);
+                    x.AvailableMargin = x.MarginRequirements - x.Equity;
+                    
                     return x;
                 })
                 .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
@@ -176,8 +192,8 @@ namespace MarginTrading.NotificationGenerator.Services
                 CurrentPeriod = reportType == OvernightSwapReportType.Daily 
                     ? from.ToString("dd.MM.yyyy")
                     : from.ToString("MM.yyyy"),
-                From = from.ToString("dd.MM.yyyy"),
-                To = to.ToString("dd.MM.yyyy"),
+                From = $"{@from:dd.MM.yyyy mm:ss}",
+                To = $"{to.AddMinutes(-1):dd.MM.yyyy mm:ss}",
                 ClientId = clientId,
                 ClosedTrades = closedTrades
                     .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
@@ -231,6 +247,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     accountHistoryAggregate.PositionsHistory.Concat(result.PositionsHistory).ToArray();
             }
 
+            //TODO grab all swaps history here, and put it to closedTrades and openPositions
             var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderHistoryContract, OrderHistory>(x)))
                 .DistinctBy(x => x.Id)
@@ -246,6 +263,7 @@ namespace MarginTrading.NotificationGenerator.Services
                 .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderContract, OrderHistory>(x)))
                 .SetInstrumentName(assetPairNames)
                 .ToList();
+
             var accountTransactions = accountHistoryAggregate.Account.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
