@@ -30,10 +30,37 @@
                     <p style="font-size: 1.0em;line-height: 180%;margin-bottom: 10px;">
                         Account: {{Id}}     Currency: {{BaseAssetId}}
                     </p>
+                </td>
+            </tr>
+            <tr style="margin-top: 10px;">
+                <td style="padding:0 40px 0 40px;">
+                    <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">A/C Summary</p>
+                    <table border="0" style="margin:auto;width:750px;border-collapse: collapse;">
+                        <tr>
+                            <td style="text-align: center">Closed Trades PnL: {{ClosedTradesPnl}}</td>
+                            <td style="text-align: center">Floating PnL: {{FloatingPnl}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center">Cash Transactions: {{CashTransactions}}</td>
+                            <td style="text-align: center">Equity: {{Equity}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center">Change in Balance: {{ChangeInBalance}}</td>
+                            <td style="text-align: center">Margin Requirements: {{MarginRequirements}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center">Balance: {{Balance}}</td>
+                            <td style="text-align: center">Available Margin: {{AvailableMargin}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Cash Transactions</p>
                     <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                         <tr>
-                            <td>Id</td>
+                            <th>Id</th>
                             <th>Time</th>
                             <th>Cash Type</th>
                             <th>Amount</th>
@@ -50,7 +77,7 @@
                         {{/AccountTransactions}}
                         {{^AccountTransactions}}
                             <tr>
-                                <td style="text-align: center" colspan="6">No transactions</td>
+                                <td style="text-align: center" colspan="5">No transactions</td>
                             </tr>
                         {{/AccountTransactions}}
                     </table>
@@ -62,7 +89,7 @@
                 <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Open Positions</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
-                        <td>Id</td>
+                        <th>Id</th>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Open Price</th>
@@ -70,6 +97,7 @@
                         <th>Volume</th>
                         <th>Take Profit</th>
                         <th>Stop Loss</th>
+                        <th>Swap</th>
                         <th>PnL</th>
                     </tr>
                     {{#OpenPositions}}
@@ -82,12 +110,13 @@
                             <td style="text-align: center">{{Volume}}</td>
                             <td style="text-align: center">{{TakeProfit}}</td>
                             <td style="text-align: center">{{StopLoss}}</td>
-                            <td style="text-align: center">{{PnL}} {{AccountAssetId}}</td>
+                            <td style="text-align: center">{{Swap}}</td>
+                            <td style="text-align: center">{{PnL}}</td>
                         </tr>
                     {{/OpenPositions}}
                     {{^OpenPositions}}
                         <tr>
-                            <td style="text-align: center" colspan="8">No opened positions</td>
+                            <td style="text-align: center" colspan="10">No opened positions</td>
                         </tr>
                     {{/OpenPositions}}
                 </table>
@@ -98,7 +127,7 @@
                 <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Pending Orders</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
-                        <td>Id</td>
+                        <th>Id</th>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Pending Order Target Price</th>
@@ -119,7 +148,7 @@
                     {{/PendingPositions}}
                     {{^PendingPositions}}
                         <tr>
-                            <td style="text-align: center" colspan="6">No pending orders</td>
+                            <td style="text-align: center" colspan="7">No pending orders</td>
                         </tr>
                     {{/PendingPositions}}
                 </table>
@@ -130,7 +159,7 @@
                 <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Closed Trades</p>
                 <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
                     <tr>
-                        <td>Id</td>
+                        <th>Id</th>
                         <th>Instrument</th>
                         <th>Direction</th>
                         <th>Volume</th>
@@ -139,6 +168,7 @@
                         <th>Open Date</th>
                         <th>Close Date</th>
                         <th>Close Reason</th>
+                        <th>Swap</th>
                         <th>PnL</th>
                     </tr>
                     {{#ClosedTrades}}
@@ -152,37 +182,15 @@
                             <td style="text-align: center">{{OpenDate}}</td>
                             <td style="text-align: center">{{CloseDate}}</td>
                             <td style="text-align: center">{{CloseReason}}</td>
-                            <td style="text-align: center">{{PnL}} {{AccountAssetId}}</td>
+                            <td style="text-align: center">{{Swap}}</td>
+                            <td style="text-align: center">{{PnL}}</td>
                         </tr>
                     {{/ClosedTrades}}
                     {{^ClosedTrades}}
                         <tr>
-                            <td style="text-align: center" colspan="9">No closed trades</td>
+                            <td style="text-align: center" colspan="11">No closed trades</td>
                         </tr>
                     {{/ClosedTrades}}
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding:0 40px 0 40px;">
-                <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">A/C Summary</p>
-                <table border="0" style="margin:auto;width:750px;border-collapse: collapse;">
-                    <tr>
-                        <td style="text-align: center">Closed Trades PnL: {{ClosedTradesPnl}}</td>
-                        <td style="text-align: center">Floating PnL: {{FloatingPnl}}</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center">Cash Transactions: {{CashTransactions}}</td>
-                        <td style="text-align: center">Equity: {{Equity}}</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center">Change in Balance: {{ChangeInBalance}}</td>
-                        <td style="text-align: center">Margin Requirements: {{MarginRequirements}}</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center">Balance: {{Balance}}</td>
-                        <td style="text-align: center">Available Margin: {{AvailableMargin}}</td>
-                    </tr>
                 </table>
             </td>
         </tr>

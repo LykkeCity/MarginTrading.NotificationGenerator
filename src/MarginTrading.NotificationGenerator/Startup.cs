@@ -69,7 +69,7 @@ namespace MarginTrading.NotificationGenerator
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
+                builder.RegisterModule(new JobModule(appSettings.Nested(x => x.MtNotificationGeneratorSettings), 
                     Log, Environment));
                 builder.RegisterModule(new ExternalServicesModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
                     Log, Environment));
