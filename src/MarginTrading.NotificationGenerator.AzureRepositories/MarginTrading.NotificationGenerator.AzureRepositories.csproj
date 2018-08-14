@@ -10,8 +10,4 @@
   <ItemGroup>
     <ProjectReference Include="..\MarginTrading.NotificationGenerator.Core\MarginTrading.NotificationGenerator.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities" />
-    <Folder Include="Repositories" />
-  </ItemGroup>
 </Project>

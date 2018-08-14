@@ -27,5 +27,17 @@ namespace MarginTrading.NotificationGenerator.Core
                 return x;
             });
         } 
+        
+        public static IEnumerable<OrderHistory> SetSwaps(this IEnumerable<OrderHistory> orderHistory, 
+            Dictionary<string, decimal> swapsSum)
+        {
+            return orderHistory.Select(x =>
+            {
+                x.Swap = swapsSum.TryGetValue(x.Id, out var swaps)
+                    ? swaps
+                    : 0;
+                return x;
+            });
+        } 
     }
 }
