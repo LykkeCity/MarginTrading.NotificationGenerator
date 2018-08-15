@@ -15,6 +15,9 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public string LegalEntity { get; set; }
 
         public List<AccountHistory> AccountTransactions { get; set; } = new List<AccountHistory>();
+        public List<OrderHistory> ClosedTrades { get; set; }
+        public List<OrderHistory> OpenPositions { get; set; }
+        public List<OrderHistory> PendingPositions { get; set; }
 
         #region Summary
 

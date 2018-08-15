@@ -129,15 +129,16 @@ namespace MarginTrading.NotificationGenerator.Services
             Exception anyException = null;
             foreach (var notification in notifications)
             {
-                if (reportType == OvernightSwapReportType.Monthly || 
-                    (notification.ClosedTrades.Any() || notification.OpenPositions.Any() ||
-                        notification.PendingPositions.Any()))
+                if (reportType == OvernightSwapReportType.Monthly
+                    || notification.Accounts.Sum(x => x.ClosedTrades.Count) > 0
+                    || notification.Accounts.Sum(x => x.OpenPositions.Count) > 0
+                    || notification.Accounts.Sum(x => x.PendingPositions.Count) > 0)
                 {
                     try
                     {
                         await _emailService.PrepareAndSendEmailAsync(emails[notification.ClientId],
                             "Margin Trading - " + (reportType == OvernightSwapReportType.Daily ? "Daily" : "Monthly")
-                                +$" trading report for {notification.CurrentPeriod}",
+                                                + $" trading report for {notification.CurrentPeriod}",
                             reportType == OvernightSwapReportType.Daily ? "DailyTradingReport" : "MonthlyTradingReport",
                             notification);
 
@@ -171,6 +172,13 @@ namespace MarginTrading.NotificationGenerator.Services
             var closedTradesPnls = closedTrades.GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.Sum(ct => ct.PnL));
             var floatingPnls = openPositions.GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.Sum(ct => ct.PnL));
             
+            var closedTradesByAccount = closedTrades.Where(x => x.ClientId == clientId)
+                .GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.OrderByDescending(z => z.CloseDate).ToList());
+            var openPositionsByAccount = openPositions.Where(x => x.ClientId == clientId)
+                .GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.OrderByDescending(z => z.OpenDate).ToList());
+            var pendingPositionsByAccount = pendingPositions.Where(x => x.ClientId == clientId)
+                .GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.OrderByDescending(z => z.CreateDate).ToList());
+            
             var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
                 .Select(x =>
                 {
@@ -180,7 +188,7 @@ namespace MarginTrading.NotificationGenerator.Services
                         {
                             at.Comment = !string.IsNullOrEmpty(at.OrderId) 
                                          && orderInstruments.TryGetValue(at.OrderId, out var instrument)
-                                ? $"{instrument}: {at.OrderId}"
+                                ? $"position id: {at.OrderId} ({instrument})"
                                 : at.Comment;
                             return at;
                         })
@@ -193,30 +201,30 @@ namespace MarginTrading.NotificationGenerator.Services
                     x.CashTransactions = x.AccountTransactions.Sum(at => at.Amount);
                     x.Equity = x.Balance - x.FloatingPnl;
                     x.ChangeInBalance = x.ClosedTradesPnl + x.CashTransactions;
-                    x.AvailableMargin = x.MarginRequirements - x.Equity;
+                    x.AvailableMargin = x.Equity - x.MarginRequirements;
+
+                    x.ClosedTrades = closedTradesByAccount.TryGetValue(x.Id, out var extractedClosed)
+                        ? extractedClosed
+                        : new List<OrderHistory>();
+                    x.OpenPositions = openPositionsByAccount.TryGetValue(x.Id, out var extractedOpened)
+                        ? extractedOpened
+                        : new List<OrderHistory>();
+                    x.PendingPositions = pendingPositionsByAccount.TryGetValue(x.Id, out var extractedPending)
+                        ? extractedPending
+                        : new List<OrderHistory>();
                     
                     return x;
                 })
                 .OrderByDescending(x => x.Balance).ThenBy(x => x.BaseAssetId).ToList();
             
-            var accountIds = Enumerable.ToHashSet(filteredAccounts.Select(x => x.Id));
             return new PeriodicTradingNotification
             {
                 CurrentPeriod = reportType == OvernightSwapReportType.Daily 
                     ? from.ToString("dd.MM.yyyy")
                     : from.ToString("MM.yyyy"),
-                From = $"{@from:dd.MM.yyyy mm:ss}",
-                To = $"{to.AddMinutes(-1):dd.MM.yyyy mm:ss}",
+                From = $"{@from:dd.MM.yyyy} 00:00",
+                To = $"{to.AddMinutes(-1):dd.MM.yyyy} 23:59",
                 ClientId = clientId,
-                ClosedTrades = closedTrades
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CloseDate).ToList(),
-                OpenPositions = openPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.OpenDate).ToList(),
-                PendingPositions = pendingPositions
-                    .Where(x => x.ClientId == clientId && accountIds.Contains(x.AccountId))
-                    .OrderByDescending(x => x.CreateDate).ToList(),
                 Accounts = filteredAccounts,
                 ReportType = reportType,
             };
@@ -281,7 +289,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     from: accountHistoryAggregate.PositionsHistory.Concat(accountHistoryAggregate.OpenPositions)
                         .Select(x => x.OpenDate).Min(), 
                     to: null)) 
-                .GroupBy(x => x.OpenOrderId).ToDictionary(x => x.Key, x => x.Sum(i => i.Value));
+                .GroupBy(x => x.OpenOrderId).ToDictionary(x => x.Key, x => x.Sum(i => -i.Value));
             
             //prepare output data
             var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
