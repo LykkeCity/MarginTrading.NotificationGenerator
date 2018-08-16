@@ -199,7 +199,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     if (floatingPnls.TryGetValue(x.Id, out var floatingPnl))
                         x.FloatingPnl = floatingPnl;
                     x.CashTransactions = x.AccountTransactions.Sum(at => at.Amount);
-                    x.Equity = x.Balance - x.FloatingPnl;
+                    x.Equity = x.Balance + x.FloatingPnl;
                     x.ChangeInBalance = x.ClosedTradesPnl + x.CashTransactions;
                     x.AvailableMargin = x.Equity - x.MarginRequirements;
 
