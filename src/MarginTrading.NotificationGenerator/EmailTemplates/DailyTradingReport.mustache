@@ -7,7 +7,7 @@
     <div style="margin:20px auto;width:600px;">
         <img src="https://lkefiles.blob.core.windows.net/images/emails/logo_big.png" height="60" alt="Lykke logo" />
     </div>
-    <table style="margin:auto;width:800px;border: 1px solid #E5E7EA;background-color: #fff;">
+    <table style="margin:auto;width:1000px;border: 1px solid #E5E7EA;background-color: #fff;">
         <tr>
             <td style="padding-top:50px;"></td>
         </tr>
@@ -35,9 +35,9 @@
             <tr>
                 <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Cash Transactions</p>
-                    <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <table border="1" style="margin:auto;width:950px;border-collapse: collapse;">
                         <tr>
-                            <th>Id</th>
+                            <th>Transaction Id</th>
                             <th>Time</th>
                             <th>Cash Type</th>
                             <th>Amount</th>
@@ -63,9 +63,9 @@
             <tr>
                 <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Open Positions</p>
-                    <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <table border="1" style="margin:auto;width:950px;border-collapse: collapse;">
                         <tr>
-                            <th>Id</th>
+                            <th>Position Id</th>
                             <th>Instrument</th>
                             <th>Direction</th>
                             <th>Open Price</th>
@@ -101,9 +101,9 @@
             <tr>
                 <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Pending Orders</p>
-                    <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <table border="1" style="margin:auto;width:950px;border-collapse: collapse;">
                         <tr>
-                            <th>Id</th>
+                            <th>Order Id</th>
                             <th>Instrument</th>
                             <th>Direction</th>
                             <th>Pending Order Target Price</th>
@@ -133,14 +133,16 @@
             <tr>
                 <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">Closed Trades</p>
-                    <table border="1" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <table border="1" style="margin:auto;width:950px;border-collapse: collapse;">
                         <tr>
-                            <th>Id</th>
+                            <th>Trade Id</th>
                             <th>Instrument</th>
                             <th>Direction</th>
                             <th>Volume</th>
                             <th>Open Price</th>
                             <th>Close Price</th>
+                            <th>Take Profit</th>
+                            <th>Stop Loss</th>
                             <th>Open Date</th>
                             <th>Close Date</th>
                             <th>Close Reason</th>
@@ -155,6 +157,8 @@
                                 <td style="text-align: center">{{Volume}}</td>
                                 <td style="text-align: center">{{OpenPrice}}</td>
                                 <td style="text-align: center">{{ClosePrice}}</td>
+                                <td style="text-align: center">{{TakeProfit}}</td>
+                                <td style="text-align: center">{{StopLoss}}</td>
                                 <td style="text-align: center">{{OpenDate}}</td>
                                 <td style="text-align: center">{{CloseDate}}</td>
                                 <td style="text-align: center">{{CloseReason}}</td>
@@ -164,7 +168,7 @@
                         {{/ClosedTrades}}
                         {{^ClosedTrades}}
                             <tr>
-                                <td style="text-align: center" colspan="11">No closed trades</td>
+                                <td style="text-align: center" colspan="13">No closed trades</td>
                             </tr>
                         {{/ClosedTrades}}
                     </table>
@@ -173,7 +177,7 @@
             <tr style="margin-top: 10px;">
                 <td style="padding:0 40px 0 40px;">
                     <p style="font-size: 1.0em;font-weight: bold;line-height: 180%;">A/C Summary</p>
-                    <table border="0" style="margin:auto;width:750px;border-collapse: collapse;">
+                    <table border="0" style="margin:auto;width:950px;border-collapse: collapse;">
                         <tr>
                             <td style="text-align: center">Closed Trades PnL: {{ClosedTradesPnl}}</td>
                             <td style="text-align: center">Floating PnL: {{FloatingPnl}}</td>
