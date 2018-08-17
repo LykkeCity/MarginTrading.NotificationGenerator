@@ -76,7 +76,7 @@ namespace MarginTrading.NotificationGenerator.Modules
 			
             builder.Register<IOvernightSwapHistoryRepository>(ctx =>
                 AzureRepoFactories.MarginTrading.CreateOvernightSwapHistoryRepository(_settingsReloadingManager
-                    .Nested(x => x.Db.LogsConnString), _log)
+                    .Nested(x => x.Db.HistoryConnString), _log)
             ).SingleInstance();
 
             builder.Populate(_services);
