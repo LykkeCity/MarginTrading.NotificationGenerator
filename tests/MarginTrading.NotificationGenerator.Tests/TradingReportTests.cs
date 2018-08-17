@@ -3,6 +3,7 @@ using System.Linq;
 using Autofac;
 using Common.Log;
 using Lykke.Service.EmailSender;
+using Lykke.SettingsReader;
 using MarginTrading.NotificationGenerator.Core.Domain;
 using MarginTrading.NotificationGenerator.Core.Services;
 using MarginTrading.NotificationGenerator.Core.Settings;
@@ -44,8 +45,8 @@ namespace MarginTrading.NotificationGenerator.Tests
                 }
             };
 
-
-            builder.RegisterModule(new JobModule(fakeSettings, _log, hostingEnvMock.Object));
+            builder.RegisterModule(new JobModule(new StaticSettingsManager<NotificationGeneratorSettings>(fakeSettings), 
+                _log, hostingEnvMock.Object));
             var externalMockModule = new ExternalServiceMockModule(_log);
             EmailSenderMock = externalMockModule.EmailSenderMock;
             builder.RegisterModule(externalMockModule);

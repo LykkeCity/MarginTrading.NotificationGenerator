@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace MarginTrading.NotificationGenerator.Core.Domain
 {
@@ -9,17 +10,14 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
         public string To { get; set; }
         public string ClientId { get; set; }
 
-        public List<OrderHistory> ClosedTrades { get; set; }
-        public List<OrderHistory> OpenPositions { get; set; }
-        public List<OrderHistory> PendingPositions { get; set; }
         public List<Account> Accounts { get; set; }
         
         public OvernightSwapReportType ReportType { get; set; }
 
         public string GetLogData()
         {
-            return ReportType == OvernightSwapReportType.Daily ? $"Daily" : $"Monthly"
-                + $" trading notification for {ClientId} sent. Closed trades: {ClosedTrades.Count}, open positions: {OpenPositions.Count}, pending orders: {PendingPositions.Count}, accounts: {Accounts.Count}.";   
+            return ReportType == OvernightSwapReportType.Daily ? "Daily" : "Monthly"
+                + $" trading notification for {ClientId} sent. Closed trades: {Accounts.Sum(x => x.ClosedTrades.Count)}, open positions: {Accounts.Sum(x => x.OpenPositions.Count)}, pending orders: {Accounts.Sum(x => x.PendingPositions.Count)}, accounts: {Accounts.Count}.";   
         }
     }
 }

@@ -69,7 +69,7 @@ namespace MarginTrading.NotificationGenerator
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
+                builder.RegisterModule(new JobModule(appSettings.Nested(x => x.MtNotificationGeneratorSettings), 
                     Log, Environment));
                 builder.RegisterModule(new ExternalServicesModule(appSettings.CurrentValue.MtNotificationGeneratorSettings, 
                     Log, Environment));
@@ -165,7 +165,7 @@ namespace MarginTrading.NotificationGenerator
         {
             try
             {
-                // NOTE: Job still can recieve and process IsAlive requests here, so take care about it if you add logic here.
+                // NOTE: Job still can receive and process IsAlive requests here, so take care about it if you add logic here.
 
                 await ApplicationContainer.Resolve<IShutdownManager>().StopAsync();
             }
@@ -183,7 +183,7 @@ namespace MarginTrading.NotificationGenerator
         {
             try
             {
-                // NOTE: Job can't recieve and process IsAlive requests here, so you can destroy all resources
+                // NOTE: Job can't receive and process IsAlive requests here, so you can destroy all resources
                 
                 if (Log != null)
                 {
@@ -215,7 +215,7 @@ namespace MarginTrading.NotificationGenerator
 
             if (string.IsNullOrEmpty(dbLogConnectionString))
             {
-                consoleLogger.WriteWarningAsync(nameof(Startup), nameof(CreateLogWithSlack), "Table loggger is not inited").Wait();
+                consoleLogger.WriteWarningAsync(nameof(Startup), nameof(CreateLogWithSlack), "Table logger is not initiated").Wait();
                 return aggregateLogger;
             }
 
@@ -235,7 +235,7 @@ namespace MarginTrading.NotificationGenerator
 
             var slackNotificationsManager = new LykkeLogToAzureSlackNotificationsManager(slackService, consoleLogger);
 
-            // Creating azure storage logger, which logs own messages to concole log
+            // Creating azure storage logger, which logs own messages to console log
             var azureStorageLogger = new LykkeLogToAzureStorage(
                 persistenceManager,
                 slackNotificationsManager,

@@ -36,6 +36,8 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
 
         public decimal? StopLoss { get; set; }
         
+        public decimal Swap { get; set; }
+        
         public decimal PnL { get; set; }
 
         public OrderHistory ApplyPriceAccuracy(int accuracy)

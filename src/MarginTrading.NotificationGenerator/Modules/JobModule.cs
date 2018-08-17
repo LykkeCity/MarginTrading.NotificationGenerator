@@ -5,6 +5,8 @@ using Lykke.HttpClientGenerator;
 using Lykke.Service.ClientAccount.Client;
 using Lykke.Service.EmailSender;
 using Lykke.SettingsReader;
+using MarginTrading.NotificationGenerator.AzureRepositories;
+using MarginTrading.NotificationGenerator.Core.Repositories;
 using MarginTrading.NotificationGenerator.Core.Services;
 using MarginTrading.NotificationGenerator.Services;
 using MarginTrading.NotificationGenerator.Settings.JobSettings;
@@ -17,16 +19,18 @@ namespace MarginTrading.NotificationGenerator.Modules
     public class JobModule : Module
     {
         private readonly IHostingEnvironment _environment;
+        private readonly IReloadingManager<NotificationGeneratorSettings> _settingsReloadingManager;
         private readonly NotificationGeneratorSettings _settings;
         private readonly ILog _log;
         // NOTE: you can remove it if you don't need to use IServiceCollection extensions to register service specific dependencies
         private readonly IServiceCollection _services;
 
-        public JobModule(NotificationGeneratorSettings settings, ILog log, IHostingEnvironment environment)
+        public JobModule(IReloadingManager<NotificationGeneratorSettings> settings, ILog log, IHostingEnvironment environment)
         {
             _log = log;
             _environment = environment;
-            _settings = settings;
+            _settings = settings.CurrentValue;
+            _settingsReloadingManager = settings;
 
             _services = new ServiceCollection();
         }
@@ -69,6 +73,11 @@ namespace MarginTrading.NotificationGenerator.Modules
                 .SingleInstance();
             
             builder.RegisterType<ConvertService>().As<IConvertService>().SingleInstance();
+			
+            builder.Register<IOvernightSwapHistoryRepository>(ctx =>
+                AzureRepoFactories.MarginTrading.CreateOvernightSwapHistoryRepository(_settingsReloadingManager
+                    .Nested(x => x.Db.HistoryConnString), _log)
+            ).SingleInstance();
 
             builder.Populate(_services);
         }
