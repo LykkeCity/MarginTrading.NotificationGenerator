@@ -16,7 +16,7 @@ namespace MarginTrading.NotificationGenerator.Core.Domain
 
         public string GetLogData()
         {
-            return ReportType == OvernightSwapReportType.Daily ? "Daily" : "Monthly"
+            return (ReportType == OvernightSwapReportType.Daily ? "Daily" : "Monthly")
                 + $" trading notification for {ClientId} sent. Closed trades: {Accounts.Sum(x => x.ClosedTrades.Count)}, open positions: {Accounts.Sum(x => x.OpenPositions.Count)}, pending orders: {Accounts.Sum(x => x.PendingPositions.Count)}, accounts: {Accounts.Count}.";   
         }
     }
