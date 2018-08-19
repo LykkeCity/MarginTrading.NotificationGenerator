@@ -263,25 +263,16 @@ namespace MarginTrading.NotificationGenerator.Services
             var assetPairNames = assetPairs.ToDictionary(x => x.Id, x => x.Name);
             var assetPairAccuracy = assetPairs.ToDictionary(x => x.Id, x => x.Accuracy);
 
-            var accountHistoryAggregate = new AccountHistoryResponse
+            var accountHistoryAggregate = await _accountHistoryApi.ByTypes(new AccountHistoryRequest
             {
-                Account = new AccountHistoryContract[0],
-                OpenPositions = new OrderHistoryContract[0],
-                PositionsHistory = new OrderHistoryContract[0]
-            };
-            foreach (var clientId in clientIds)
-            {//TODO batch launcher on semaphores?
-                var result = await _accountHistoryApi.ByTypes(new AccountHistoryRequest
-                {
-                    ClientId = clientId,
-                    From = from,
-                    To = to,
-                });
-                accountHistoryAggregate.Account = accountHistoryAggregate.Account.Concat(result.Account).ToArray();
-                accountHistoryAggregate.OpenPositions =
-                    accountHistoryAggregate.OpenPositions.Concat(result.OpenPositions).ToArray();
-                accountHistoryAggregate.PositionsHistory =
-                    accountHistoryAggregate.PositionsHistory.Concat(result.PositionsHistory).ToArray();
+                From = from,
+                To = to,
+            });
+            var deletedClients = clientIds.Except(accountHistoryAggregate.Account.Select(x => x.ClientId)).ToList();
+            if (deletedClients.Any())
+            {
+                await _log.WriteInfoAsync(nameof(TradingReportService), nameof(GetDataForNotifications),
+                    $"Following clients are having accounts, but not returned by DataReader: {string.Join(", ", deletedClients)}");
             }
 
             //grab all swaps history here, and put it to closedTrades and openPositions
