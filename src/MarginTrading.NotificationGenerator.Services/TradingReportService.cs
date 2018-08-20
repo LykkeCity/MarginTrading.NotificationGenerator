@@ -168,11 +168,14 @@ namespace MarginTrading.NotificationGenerator.Services
             IEnumerable<OrderHistory> pendingPositions, IEnumerable<Account> accounts,
             IEnumerable<AccountHistory> accountTransactions)
         {
-            var orderInstruments = closedTrades.Concat(openPositions).ToDictionary(x => x.Id, x => x.Instrument);
-            var closedTradesPnls = closedTrades.GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.Sum(ct => ct.PnL));
+            bool TimeClause(DateTime t) => t > @from && t < to;
+            var closedTradesFiltered = closedTrades.Where(x => TimeClause(x.CloseDate ?? DateTime.MaxValue)).ToList();
+            
+            var orderInstruments = closedTradesFiltered.Concat(openPositions).ToDictionary(x => x.Id, x => x.Instrument);
+            var closedTradesPnls = closedTradesFiltered.GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.Sum(ct => ct.PnL));
             var floatingPnls = openPositions.GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.Sum(ct => ct.PnL));
             
-            var closedTradesByAccount = closedTrades.Where(x => x.ClientId == clientId)
+            var closedTradesByAccount = closedTradesFiltered.Where(x => x.ClientId == clientId)
                 .GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.OrderByDescending(z => z.CloseDate).ToList());
             var openPositionsByAccount = openPositions.Where(x => x.ClientId == clientId)
                 .GroupBy(x => x.AccountId).ToDictionary(x => x.Key, x => x.OrderByDescending(z => z.OpenDate).ToList());
@@ -182,11 +185,12 @@ namespace MarginTrading.NotificationGenerator.Services
             var filteredAccounts = accounts.Where(x => x.ClientId == clientId)
                 .Select(x =>
                 {
-                    x.AccountTransactions = accountTransactions.Where(at => at.ClientId == clientId
+                    x.AccountTransactions = accountTransactions.Where(at => TimeClause(at.Date)
+                                                                            && at.ClientId == clientId
                                                                             && at.AccountId == x.Id)
                         .Select(at =>
                         {
-                            at.Comment = !string.IsNullOrEmpty(at.OrderId) 
+                            at.Comment = !string.IsNullOrEmpty(at.OrderId)
                                          && orderInstruments.TryGetValue(at.OrderId, out var instrument)
                                 ? $"position id: {at.OrderId} ({instrument})"
                                 : at.Comment;
