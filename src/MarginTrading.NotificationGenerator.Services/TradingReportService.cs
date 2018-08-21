@@ -85,20 +85,21 @@ namespace MarginTrading.NotificationGenerator.Services
 
         public async Task PerformReporting(OvernightSwapReportType reportType)
         {
+            var invocationTime = GetInvocationTime(reportType);
             var from = reportType == OvernightSwapReportType.Daily 
                 ? _systemClock.UtcNow.Date.AddDays(-1)
                 : _systemClock.UtcNow.Date.AddMonths(-1);
-            var to = _systemClock.UtcNow.Date;
-            var reportPeriodIndex = from.Day;
+            var to = new DateTime(_systemClock.UtcNow.Year, _systemClock.UtcNow.Month, _systemClock.UtcNow.Day,
+                invocationTime.Hours, invocationTime.Minutes, invocationTime.Seconds);
+            var reportPeriodIndex = reportType == OvernightSwapReportType.Daily
+                ? from.DayOfWeek.ToString()
+                : from.Month.ToString("MMMM");
 
             await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
-                reportType == OvernightSwapReportType.Daily
-                    ? $"Report invoked for {reportPeriodIndex} day, period from {from:s} to {to:s}"
-                    : $"Report invoked for {reportPeriodIndex} month, period from {from:s} to {to:s}");
+                $"Report invoked for {reportPeriodIndex}, period from {from:s} to {to:s}");
 
-           (string[] clientIds, List<Account> accounts, List<OrderHistory> closedTrades, 
-                   List<OrderHistory> openPositions, List<OrderHistory> pendingPositions, 
-                   List<AccountHistory> accountTransactions) = await GetDataForNotifications(reportType, to, from);
+            var (clientIds, accounts, closedTrades, openPositions, pendingPositions, accountTransactions) =
+                await GetDataForNotifications(reportType, to, from);
 
             //prepare notification models
             var notifications = clientIds.Select(x =>
@@ -223,7 +224,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     ? from.ToString("dd.MM.yyyy")
                     : from.ToString("MM.yyyy"),
                 From = $"{@from:dd.MM.yyyy} 00:00",
-                To = $"{to.AddMinutes(-1):dd.MM.yyyy} 23:59",
+                To = $"{to.Date.AddMinutes(-1):dd.MM.yyyy} 23:59",
                 ClientId = clientId,
                 Accounts = filteredAccounts,
                 ReportType = reportType,
@@ -321,6 +322,13 @@ namespace MarginTrading.NotificationGenerator.Services
         private static OrderHistory Convert(IReadOnlyDictionary<string, int> accuracy, OrderHistory orderHistory)
         {
             return orderHistory.ApplyPriceAccuracy(accuracy[orderHistory.Instrument]);
+        }
+
+        private TimeSpan GetInvocationTime(OvernightSwapReportType reportType)
+        {
+            return reportType == OvernightSwapReportType.Daily
+                ? _dailyNotificationsSettings.InvocationTime
+                : _monthlyNotificationsSettings.InvocationTime;
         }
     }
 }
