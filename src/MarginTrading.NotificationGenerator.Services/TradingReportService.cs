@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +14,7 @@ using MarginTrading.Backend.Contracts.AccountHistory;
 using MarginTrading.Backend.Contracts.TradeMonitoring;
 using MarginTrading.NotificationGenerator.Core;
 using MarginTrading.NotificationGenerator.Core.Domain;
+using MarginTrading.NotificationGenerator.Core.Helpers;
 using MarginTrading.NotificationGenerator.Core.Repositories;
 using MarginTrading.NotificationGenerator.Core.Services;
 using MarginTrading.NotificationGenerator.Core.Settings;
@@ -85,20 +87,21 @@ namespace MarginTrading.NotificationGenerator.Services
 
         public async Task PerformReporting(OvernightSwapReportType reportType)
         {
+            var invocationTime = GetInvocationTime(reportType);
             var from = reportType == OvernightSwapReportType.Daily 
                 ? _systemClock.UtcNow.Date.AddDays(-1)
                 : _systemClock.UtcNow.Date.AddMonths(-1);
-            var to = _systemClock.UtcNow.Date;
-            var reportPeriodIndex = from.Day;
+            var to = new DateTime(_systemClock.UtcNow.Year, _systemClock.UtcNow.Month, _systemClock.UtcNow.Day,
+                invocationTime.Hours, invocationTime.Minutes, invocationTime.Seconds);
+            var reportPeriodIndex = reportType == OvernightSwapReportType.Daily
+                ? from.DayOfWeek.ToString()
+                : from.Month.ToString("MMMM");
 
             await _log.WriteInfoAsync(nameof(TradingReportService), nameof(PerformReporting),
-                reportType == OvernightSwapReportType.Daily
-                    ? $"Report invoked for {reportPeriodIndex} day, period from {from:s} to {to:s}"
-                    : $"Report invoked for {reportPeriodIndex} month, period from {from:s} to {to:s}");
+                $"Report invoked for {reportPeriodIndex}, period from {from:s} to {to:s}");
 
-           (string[] clientIds, List<Account> accounts, List<OrderHistory> closedTrades, 
-                   List<OrderHistory> openPositions, List<OrderHistory> pendingPositions, 
-                   List<AccountHistory> accountTransactions) = await GetDataForNotifications(reportType, to, from);
+            var (clientIds, accounts, closedTrades, openPositions, pendingPositions, accountTransactions) =
+                await GetDataForNotifications(reportType, to, from);
 
             //prepare notification models
             var notifications = clientIds.Select(x =>
@@ -227,7 +230,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     ? from.ToString("dd.MM.yyyy")
                     : from.ToString("MM.yyyy"),
                 From = $"{@from:dd.MM.yyyy} 00:00",
-                To = $"{to.AddMinutes(-1):dd.MM.yyyy} 23:59",
+                To = $"{to.AddMinutes(-1):dd.MM.yyyy HH:mm}",
                 ClientId = clientId,
                 Accounts = filteredAccounts,
                 ReportType = reportType,
@@ -267,34 +270,47 @@ namespace MarginTrading.NotificationGenerator.Services
             var assetPairNames = assetPairs.ToDictionary(x => x.Id, x => x.Name);
             var assetPairAccuracy = assetPairs.ToDictionary(x => x.Id, x => x.Accuracy);
 
-            var accountHistoryAggregate = await _accountHistoryApi.ByTypes(new AccountHistoryRequest
+            var accountsHistoryAggregate = new ConcurrentBag<AccountHistoryContract>();
+            var openPositionsAggregate = new ConcurrentBag<OrderHistoryContract>();
+            var positionHistoryAggregate = new ConcurrentBag<OrderHistoryContract>();
+            //request data by client in concurrent mode, default level of parallelism is 10
+            Task.WaitAll(clientIds.Select(clientId => new TaskBatchRunner().Run(async () =>
             {
-                From = from,
-                To = to,
-            });
-            var deletedClients = clientIds.Except(accountHistoryAggregate.Account.Select(x => x.ClientId)).ToList();
-            if (deletedClients.Any())
-            {
-                await _log.WriteInfoAsync(nameof(TradingReportService), nameof(GetDataForNotifications),
-                    $"Following clients are having accounts, but not returned by DataReader: {string.Join(", ", deletedClients)}");
-            }
+                try
+                {
+                    var clientData = await _accountHistoryApi.ByTypes(new AccountHistoryRequest
+                    {
+                        ClientId = clientId,
+                        From = from,
+                        To = to,
+                    });
+                    clientData.Account.ForEach(item => accountsHistoryAggregate.Add(item));
+                    clientData.OpenPositions.ForEach(item => openPositionsAggregate.Add(item));
+                    clientData.PositionsHistory.ForEach(item => positionHistoryAggregate.Add(item));
+                }
+                catch(Exception ex)
+                {
+                    await _log.WriteInfoAsync(nameof(TradingReportService), nameof(GetDataForNotifications),
+                        $"The client {clientId} is deleted, but some of his accounts are in the DataReader list.");    
+                }
+            })).ToArray());
 
             //grab all swaps history here, and put it to closedTrades and openPositions
             var swapsSumByPositionId = (await _overnightSwapHistoryRepository.GetAsync(
-                    from: accountHistoryAggregate.PositionsHistory.Concat(accountHistoryAggregate.OpenPositions)
+                    from: positionHistoryAggregate.Concat(openPositionsAggregate)
                         .Select(x => x.OpenDate).Min(), 
                     to: null)) 
                 .GroupBy(x => x.OpenOrderId).ToDictionary(x => x.Key, x => x.Sum(i => -i.Value));
             
             //prepare output data
-            var closedTrades = accountHistoryAggregate.PositionsHistory.Where(x => accountClients.ContainsKey(x.AccountId))
+            var closedTrades = positionHistoryAggregate.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderHistoryContract, OrderHistory>(x)))
                 .DistinctBy(x => x.Id)
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
                 .SetSwaps(swapsSumByPositionId)
                 .ToList();
-            var openPositions = accountHistoryAggregate.OpenPositions.Where(x => accountClients.ContainsKey(x.AccountId))
+            var openPositions = openPositionsAggregate.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => Convert(assetPairAccuracy, _convertService.Convert<OrderHistoryContract, OrderHistory>(x)))
                 .SetClientId(accountClients)
                 .SetInstrumentName(assetPairNames)
@@ -305,7 +321,7 @@ namespace MarginTrading.NotificationGenerator.Services
                 .SetInstrumentName(assetPairNames)
                 .ToList();
 
-            var accountTransactions = accountHistoryAggregate.Account.Where(x => accountClients.ContainsKey(x.AccountId))
+            var accountTransactions = accountsHistoryAggregate.Where(x => accountClients.ContainsKey(x.AccountId))
                 .Select(x => _convertService.Convert<AccountHistoryContract, AccountHistory>(x))
                 .ToList();
 
@@ -316,6 +332,13 @@ namespace MarginTrading.NotificationGenerator.Services
         private static OrderHistory Convert(IReadOnlyDictionary<string, int> accuracy, OrderHistory orderHistory)
         {
             return orderHistory.ApplyPriceAccuracy(accuracy[orderHistory.Instrument]);
+        }
+
+        private TimeSpan GetInvocationTime(OvernightSwapReportType reportType)
+        {
+            return reportType == OvernightSwapReportType.Daily
+                ? _dailyNotificationsSettings.InvocationTime
+                : _monthlyNotificationsSettings.InvocationTime;
         }
     }
 }
