@@ -230,7 +230,7 @@ namespace MarginTrading.NotificationGenerator.Services
                     ? from.ToString("dd.MM.yyyy")
                     : from.ToString("MM.yyyy"),
                 From = $"{@from:dd.MM.yyyy} 00:00",
-                To = $"{to.Date.AddMinutes(-1):dd.MM.yyyy} 23:59",
+                To = $"{to.AddMinutes(-1):dd.MM.yyyy hh:mm}",
                 ClientId = clientId,
                 Accounts = filteredAccounts,
                 ReportType = reportType,
